@@ -16,6 +16,8 @@ jobs:
   multiplayer:
     runs-on: ubuntu-latest
     timeout-minutes: 12
+    env:
+      BASE_URL: https://johnfiorello.github.io/roomread/
     steps:
       - name: Check out game
         uses: actions/checkout@v4
@@ -31,7 +33,7 @@ jobs:
           npm install --save-dev playwright
           npx playwright install --with-deps chromium
 
-      - name: Run two-browser multiplayer test
+      - name: Run live two-browser multiplayer test
         run: node .github/tests/e2e.js
 
       - name: Upload test screenshots
