@@ -1,13 +1,12 @@
-# Handshake Submission Draft
+# Handshake Submission Draft — Work in Progress
 
 ## Working title
-QUICKTRAP — Solve Fast. Set Traps.
+MISSPICK — Solve Fast. Call the Miss.
 
-## Current description
-QUICKTRAP is a live 2–8 player brain-game where everyone races to solve the same tiny puzzle. Get it right early and you unlock a second move: secretly trap one wrong answer you think a friend will choose. At the reveal, fastest answers score, traps spring, victims lose a point, and the leaderboard shifts. Eight short rounds mix logic, patterns and wordplay, ending in a Lightning Round. No login or install.
+## Project description (draft)
+MISSPICK is a live 2–8 player game of fast brain teasers and even faster predictions. Everyone races to solve the same puzzle. Solve it early and you can predict which wrong answer another player will pick. At the reveal, correct answers score, accurate predictions earn bonus points, and anyone whose mistake was called loses a point. Eight quick rounds mix wordplay, logic, patterns, and a Lightning finale. Everyone confirms they're ready before the next round. No login or install.
 
 ## Current public URL
 https://johnfiorello.github.io/roomread/
 
-## Note
-Title is intentionally still treated as a working title until playtesting confirms the core game is fun.
+The final title, gameplay screenshot and submission materials will be polished after group playtesting.
