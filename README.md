@@ -1,31 +1,38 @@
+# QUICKTRAP (working title)
 
-# ODD MOTIVES
+**Solve fast. Set traps. Steal the lead.**
 
-**Everybody gets the same map. Nobody gets the same goal.**
+QUICKTRAP is a live 2–8 player browser game built around one easy-to-explain loop:
 
-ODD MOTIVES is a live 2–8 player browser game about bluffing, coordination, and conflicting private objectives. Each round gives every player a secret motive, then asks them to send one public signal before everyone secretly chooses where to go. The reveal shows who grouped up, who slipped away, and whose hidden agenda actually worked.
+> Everybody solves the same short puzzle. If you solve it correctly and early enough, secretly trap one wrong answer. Anyone who chooses it gets burned at the reveal.
 
-## Core loop
+## Scoring
 
-1. **Get a secret motive** — be alone, form a pair, join the biggest crowd, shadow a specific player, dodge them, and more.
-2. **Send a public signal** — PULL people toward one zone or PUSH them away. Signals reveal simultaneously, so nobody can wait and copy.
-3. **Make your real move** — secretly choose one of four zones after seeing the room’s signals.
-4. **Reveal the board** — score 3 points if your motive succeeds. Earn +1 Misdirect if you succeeded while your signal pointed people the wrong way.
-5. Play five rounds. Highest score wins.
+- Correct answer: **+1**
+- Fastest correct answer: **+2**
+- Successful trap: **+1 per opponent caught**, capped at +2 per round
+- Step on any trap: **−1**, with scores never below zero
+- Eight rounds total; the last round is a faster Lightning Round
 
-## Why it fits multiplayer phones
+## Design goals
 
-Private goals and hidden moves stay private on each player’s device, while synchronized signals and reveals create the shared game. There is no login, install, account, or shared network requirement.
+- Understand what to do in seconds
+- Simultaneous play on every device
+- Short rounds and immediate feedback
+- Skill-first puzzles rather than obscure trivia
+- Social payoff at the reveal
+- Enough player interaction to create grudges and rematches without eliminating anyone
 
 ## Tech
 
 - Static HTML/CSS/JavaScript
-- PeerJS/WebRTC for live peer-to-peer multiplayer
-- One browser acts as the room host
-- Room code and invite link joining
-- Responsive mobile/desktop UI
-- Rejoin support for guest devices while the host remains open
+- PeerJS/WebRTC multiplayer
+- One browser acts as host
+- 2–8 players
+- Room codes and invite links
+- Mobile-first responsive interface
+- No login, install, backend account, or database
 
-## Contest build
+## Status
 
-Built for the Handshake AI Skills Studio × OpenAI Multiplayer Game Challenge.
+Playable prototype for the Handshake AI Skills Studio × OpenAI Multiplayer Game Challenge. The repository name is still \`roomread\` temporarily so the existing GitHub Pages URL keeps working during playtesting. The repository can be renamed once the final game name is locked.
