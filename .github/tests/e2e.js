@@ -43,7 +43,23 @@ const correctFor = (q, options) => {
     ["A cube is painted on every face, then cut into 27 equal small cubes. How many small cubes have exactly TWO painted faces?","12"],
     ["If SOUTH becomes TPVUI by shifting every letter forward one, NORTH becomes…","OPSUI"],
     ["What comes next?  AZ, BY, CX, ?","DW"],
-    ["What comes next?  1, 2, 4, 7, 11, ?","16"]
+    ["What comes next?  1, 2, 4, 7, 11, ?","16"],
+    ["Which word is the same forward and backward?","LEVEL"],
+    ["Facing east, you turn right. Now you face…","South"],
+    ["Which of these birds can fly?","Owl"],
+    ["Which pair uses exactly the same letters?","LISTEN / SILENT"],
+    ["Which statement is always true?","Every square is a rectangle"],
+    ["Which word contains all five vowels exactly once?","EDUCATION"],
+    ["What letter completes the pattern? Z, X, U, Q, ?","L"],
+    ["Which pair of words are opposites?","Expand / Shrink"],
+    ["Three brothers share one sister. How many children are in their family?","4"],
+    ["Which pair is an anagram?","PEAR / REAP"],
+    ["Which word becomes another everyday word when spelled backward?","STRESSED"],
+    ["What comes next? J, F, M, A, M, J, J, A, ?","S"],
+    ["Every ZORP is a FIZZ. No FIZZ can swim. Can a ZORP swim?","Never"],
+    ["Which phrase reads the same backward when spaces are ignored?","NEVER ODD OR EVEN"],
+    ["All X are Y. Some Y are Z. What MUST follow?","None of these"],
+    ["One person always lies, one tells the truth. Someone says 'We're both liars.' Who said it?","The liar"]
   ]);
   if(q === "Which one does NOT belong?"){
     if(options.includes("Cube")) return "Cube";
@@ -62,7 +78,7 @@ const correctFor = (q, options) => {
     await host.goto(base, {waitUntil:"networkidle", timeout:30000});
     await guest.goto(base, {waitUntil:"networkidle", timeout:30000});
 
-    if(!((await host.title()) || "").includes("QUICKTRAP")) throw new Error("Live page is not QUICKTRAP: "+await host.title());
+    if(!((await host.title()) || "").includes("MISSPICK")) throw new Error("Live page is not MISSPICK: "+await host.title());
 
     await host.locator("#name").fill("HostBot");
     await host.getByRole("button",{name:"Create a room"}).click();
@@ -90,7 +106,7 @@ const correctFor = (q, options) => {
       const hostCorrect = host.getByText(correct,{exact:true}).locator("..");
       await hostCorrect.click({timeout:10000});
 
-      await host.getByText("CORRECT — NOW SET THE TRAP.").waitFor({timeout:5000});
+      await host.getByText("RIGHT! NOW CALL A MISS.").waitFor({timeout:5000});
       const trapButton = host.locator(".trap-btn").first();
       const trapText = (await trapButton.locator("b").textContent()).trim();
       await trapButton.click();
@@ -106,14 +122,26 @@ const correctFor = (q, options) => {
         await host.screenshot({path:"e2e-round-"+round+".png",fullPage:true});
       }
 
-      await host.getByRole("button",{name:round===8 ? "See final results" : "Next puzzle"}).click();
+      // Host ready alone must not advance the round.
+      await host.getByRole("button",{name:/ready for (the next round|final results)/i}).click();
+      await host.getByText("1 / 2 READY").waitFor({timeout:5000});
+      if(await host.locator(".correct-answer").count()!==1) throw new Error("Round advanced before guest was ready at "+round);
+      if(await guest.locator(".correct-answer").count()!==1) throw new Error("Guest left reveal before tapping ready");
+
+      // When both are ready, the host automatically starts the next round.
+      await guest.getByRole("button",{name:/ready for (the next round|final results)/i}).click();
+      if(round<8){
+        await host.getByText("ROUND "+(round+1)+" OF 8").waitFor({timeout:12000});
+        await guest.getByText("ROUND "+(round+1)+" OF 8").waitFor({timeout:12000});
+      }
+
     }
 
-    await host.getByText("People you trapped").waitFor({timeout:10000});
+    await host.getByText("Misses you called").waitFor({timeout:10000});
     await guest.getByText("People you trapped").waitFor({timeout:10000});
     await host.screenshot({path:"e2e-final.png",fullPage:true});
 
-    console.log("QUICKTRAP E2E PASS against "+base+": real PeerJS room, two isolated browsers, eight timed rounds, traps, penalties, synchronized final.");
+    console.log("MISSPICK E2E PASS against "+base+": real PeerJS room, two isolated browsers, eight timed rounds, successful miss calls, all-player ready gate and synchronized final.");
   } finally {
     await browser.close();
     if(server) server.kill("SIGTERM");
