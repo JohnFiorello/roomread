@@ -1,13 +1,25 @@
-# Multiplayer Test Plan
 
-1. Host creates a room on Device A.
-2. Device B joins using the six-character code.
-3. Confirm both devices show the same player list.
-4. Host starts game.
-5. Both players submit a vote; confirm the phase does not advance until all votes are in.
-6. Both submit a prediction; confirm the reveal appears for everyone.
-7. Verify vote bars, winner, score change, and leaderboard match on both devices.
-8. Run through all 5 rounds and confirm the final Room Sync score appears.
-9. Use rematch and confirm scores reset.
-10. Open invite link in a private window and confirm room code pre-fills.
-11. Test one phone and one laptop on different networks (Wi-Fi vs cellular) before submission.
+# ODD MOTIVES Multiplayer Test Plan
+
+## Required two-device path
+
+1. Device A opens the public URL and creates a room.
+2. Device B opens the public URL on a different device/network and joins using the six-character room code.
+3. Confirm both devices show the same lobby and player names.
+4. Start the game and confirm each device receives a private motive.
+5. Each player submits a PULL or PUSH signal. Confirm neither player sees the other signal until both lock in.
+6. Confirm the game advances to the move phase and both devices see the same public signals.
+7. Each player secretly selects a final zone. Confirm the reveal waits for everyone.
+8. Confirm both devices show the same final positions, motives, scoring, and leaderboard.
+9. Play all five rounds and confirm final rankings and room statistics match.
+10. Select Play Again and confirm scores and motives reset while the room stays intact.
+
+## Edge checks
+
+- Invalid room code shows a clear error.
+- A ninth player is rejected.
+- Guest refresh/rejoin works while host remains open.
+- Host leaving ends the room cleanly for guests.
+- Invite link pre-fills the room code.
+- Buttons are usable on narrow mobile screens.
+- Game remains understandable without verbal explanation.
