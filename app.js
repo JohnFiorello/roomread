@@ -63,7 +63,7 @@
     {tier:"hard", q:"Every ZORP is a FIZZ. No FIZZ can swim. Can a ZORP swim?", options:["Always","Sometimes","Never","Only adults"], correct:2, explain:"Since all zorps are fizzes, and no fizz swims, no zorp swims."},
     {tier:"hard", q:"Which phrase reads the same backward when spaces are ignored?", options:["NEVER ODD OR EVEN","THE LONG ROAD","RUN TO WIN","LATER TONIGHT"], correct:0, explain:"NEVERODDOREVEN is a palindrome."},
     {tier:"hard", q:"All X are Y. Some Y are Z. What MUST follow?", options:["All X are Z","Some X are Z","No X are Z","None of these"], correct:3, explain:"The Y objects that are Z might not include any X objects."},
-    {tier:"hard", q:"A person always lies. They say 'We are both liars.' Could they be the liar?", options:["Yes","No","Only if both lie","Not enough information"], correct:0, explain:"The statement is false because the other person cannot also be a liar if exactly one always lies."}
+    {tier:"hard", q:"One person always lies, one tells the truth. Someone says 'We're both liars.' Who said it?", options:["The liar","The truth-teller","Either one","Neither one"], correct:0, explain:"Only the liar could say this, because the statement itself is false."}
   ];
 
   const state = {
@@ -345,6 +345,11 @@
   function revealView(ps){
     const g = ps.game;
     const r = g.results;
+    const readyPlayers = g.readyPlayers || [];
+    const readyCount = readyPlayers.filter(p=>p.ready).length;
+    const allCount = readyPlayers.length;
+    const iAmReady = !!ps.you?.ready;
+    const lastRound = g.round + 1 >= TOTAL_ROUNDS;
     const mine = r.players.find(p=>p.id===state.meId);
     const correctOpt = g.puzzle.options[r.correct];
     const fastest = r.players.find(p=>p.id===r.fastestId);
@@ -373,7 +378,11 @@
         ).join("")+'</div>'+
       '</section>'+
       leaderboard(ps)+
-      '<div class="actions-center">'+(state.mode==="host"?'<button class="primary-btn" data-action="next">'+(g.round+1>=TOTAL_ROUNDS?"See final results":"Next puzzle")+'</button>':'<span class="small">Waiting for the host to continue…</span>')+'</div>'+
+      '<section class="card ready-card">'+
+        '<div class="ready-head"><div><h3>Ready for '+(lastRound?"the results?":"the next puzzle?")+'</h3><p>Take a moment to see what everyone picked. The game continues when <b>everyone</b> says they are ready.</p></div><span class="tag">'+readyCount+' / '+allCount+' READY</span></div>'+
+        '<div class="ready-roster">'+readyPlayers.map(p=>'<span class="ready-person '+(p.ready?"ready":"")+'">'+(p.ready?"✓ ":"○ ")+esc(p.name)+(p.connected?"":" (offline)")+'</span>').join("")+'</div>'+
+        '<div class="actions-center">'+(iAmReady?'<span class="small">✓ You’re ready. Waiting for the rest of the room…</span>':'<button class="primary-btn" data-action="ready">I’m ready '+(lastRound?"for final results":"for the next round")+'</button>')+'</div>'+
+      '</section>'+
       rulesModal()+
     '</div></main>';
   }
@@ -521,6 +530,7 @@
         room:state.room,
         phase:"lobby",
         round:-1,
+        ready:{},
         deck:buildDeck(),
         current:null,
         players:[{id:"p-host",token:state.token,name:state.name,score:0,trapHits:0,fastestWins:0,isHost:true,connected:true}],
@@ -608,10 +618,12 @@
     if(!p) return;
     if(msg.type==="answer") receiveAnswer(p.id,Number(msg.choice));
     if(msg.type==="trap") receiveTrap(p.id,Number(msg.choice));
+    if(msg.type==="ready") receiveReady(p.id);
   }
 
   function handleDisconnect(conn){
     if(!state.hostGame || !conn.__playerId) return;
+    if(state.conns.get(conn.__playerId)!==conn) return;
     const p=state.hostGame.players.find(x=>x.id===conn.__playerId);
     if(p) p.connected=false;
     syncAll();
@@ -684,6 +696,7 @@
     g.current=preparePuzzle(g.deck[g.round]);
     g.answers={};
     g.traps={};
+    g.ready={};
     g.phase="question";
     g.startAt=Date.now()+1500;
     g.deadline=g.startAt+duration;
@@ -788,7 +801,19 @@
       players:resultPlayers
     });
     g.phase="reveal";
+    g.ready={};
     syncAll();
+  }
+
+  function receiveReady(playerId){
+    const g=state.hostGame;
+    if(!g || g.phase!=="reveal" || !g.players.some(p=>p.id===playerId)) return;
+    g.ready[playerId]=true;
+    if(g.players.every(p=>g.ready[p.id])){
+      nextRound();
+    }else{
+      syncAll();
+    }
   }
 
   function nextRound(){
@@ -806,7 +831,7 @@
   function rematch(){
     const g=state.hostGame;
     if(!g) return;
-    g.phase="lobby";g.round=-1;g.deck=buildDeck();g.current=null;g.answers={};g.traps={};g.history=[];
+    g.phase="lobby";g.round=-1;g.deck=buildDeck();g.current=null;g.answers={};g.traps={};g.ready={};g.history=[];
     g.players.forEach(p=>{p.score=0;p.trapHits=0;p.fastestWins=0;});
     syncAll();
   }
@@ -841,7 +866,8 @@
       ps.game.tier=g.current.tier;
       ps.game.puzzle={q:g.current.q,options:g.current.options};
       ps.game.results=h;
-      ps.you={};
+      ps.game.readyPlayers=g.players.map(x=>({id:x.id,name:x.name,ready:!!g.ready?.[x.id],connected:x.connected}));
+      ps.you={ready:!!g.ready?.[playerId]};
     }
 
     if(g.phase==="final"){
@@ -879,6 +905,12 @@
     else if(state.hostConn?.open) state.hostConn.send({type:"trap",choice});
   }
 
+  function readyUp(){
+    if(state.publicState?.game?.phase!=="reveal" || state.publicState?.you?.ready) return;
+    if(state.mode==="host") receiveReady(state.meId);
+    else if(state.hostConn?.open) state.hostConn.send({type:"ready"});
+  }
+
   function leave(){
     resetNetwork();
     state.mode="home";state.error="";state.room="";state.joining=false;
@@ -901,7 +933,7 @@
     else if(a==="start") startGame();
     else if(a==="answer"){chooseAnswer(Number(el.dataset.choice));playTone("tap");}
     else if(a==="trap"){chooseTrap(Number(el.dataset.choice));playTone("win");}
-    else if(a==="next") nextRound();
+    else if(a==="ready") readyUp();
     else if(a==="rematch") rematch();
   });
 
