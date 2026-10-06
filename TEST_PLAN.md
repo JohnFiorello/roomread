@@ -1,25 +1,32 @@
+# QUICKTRAP Test Plan
 
-# ODD MOTIVES Multiplayer Test Plan
+## Core two-device test
 
-## Required two-device path
-
-1. Device A opens the public URL and creates a room.
-2. Device B opens the public URL on a different device/network and joins using the six-character room code.
-3. Confirm both devices show the same lobby and player names.
-4. Start the game and confirm each device receives a private motive.
-5. Each player submits a PULL or PUSH signal. Confirm neither player sees the other signal until both lock in.
-6. Confirm the game advances to the move phase and both devices see the same public signals.
-7. Each player secretly selects a final zone. Confirm the reveal waits for everyone.
-8. Confirm both devices show the same final positions, motives, scoring, and leaderboard.
-9. Play all five rounds and confirm final rankings and room statistics match.
-10. Select Play Again and confirm scores and motives reset while the room stays intact.
+1. Device A creates a room.
+2. Device B joins with the six-character room code.
+3. Host starts.
+4. Confirm both devices see the same puzzle and countdown.
+5. Answer correctly early on one device.
+6. Confirm that device immediately gets the trap phase while the other device does not see the answer or trap.
+7. Place a trap on a wrong answer.
+8. Have the other player choose that wrong answer.
+9. Confirm the reveal shows the correct answer, fastest player, trap placement, trapped player, and both score changes.
+10. Play through all eight rounds and confirm round 8 uses the shorter Lightning timer.
+11. Confirm final leaderboard, fastest-wins count, and trap-hit count match on both devices.
+12. Use Play Again and confirm a fresh puzzle deck and reset scores.
 
 ## Edge checks
 
-- Invalid room code shows a clear error.
-- A ninth player is rejected.
-- Guest refresh/rejoin works while host remains open.
-- Host leaving ends the room cleanly for guests.
+- Wrong answer locks; no retry.
+- Correct answer too late does not receive a trap opportunity.
+- Trap cannot be placed on the correct answer.
+- Trap window expires after about 3.2 seconds.
+- A trapped player loses at most 1 point in a round.
+- Scores never go below zero.
+- A trapper earns at most 2 trap points in one round.
+- Invalid room code fails clearly.
+- Ninth player is rejected.
 - Invite link pre-fills the room code.
-- Buttons are usable on narrow mobile screens.
-- Game remains understandable without verbal explanation.
+- Host disconnect ends the room cleanly.
+- Mobile buttons remain comfortably tappable.
+- No client receives the correct-answer index before reveal.
