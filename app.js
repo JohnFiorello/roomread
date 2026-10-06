@@ -47,7 +47,23 @@
     {tier:"hard", q:"A cube is painted on every face, then cut into 27 equal small cubes. How many small cubes have exactly TWO painted faces?", options:["8","12","18","24"], correct:1, explain:"The center cube on each of the 12 edges has exactly two painted faces."},
     {tier:"hard", q:"If SOUTH becomes TPVUI by shifting every letter forward one, NORTH becomes…", options:["OPSUI","OPSTI","OQSVI","NPSTI"], correct:0, explain:"N→O, O→P, R→S, T→U, H→I."},
     {tier:"hard", q:"What comes next?  AZ, BY, CX, ?", options:["DV","DW","DX","EV"], correct:1, explain:"The first letter moves forward; the second moves backward: A/Z, B/Y, C/X, D/W."},
-    {tier:"hard", q:"What comes next?  1, 2, 4, 7, 11, ?", options:["14","15","16","18"], correct:2, explain:"Add +1, +2, +3, +4, then +5."}
+    {tier:"hard", q:"What comes next?  1, 2, 4, 7, 11, ?", options:["14","15","16","18"], correct:2, explain:"Add +1, +2, +3, +4, then +5."},
+    {tier:"easy", q:"Which word is the same forward and backward?", options:["LEVEL","CLOUD","MUSIC","LIGHT"], correct:0, explain:"LEVEL reads the same in either direction."},
+    {tier:"easy", q:"Facing east, you turn right. Now you face…", options:["North","South","West","East"], correct:1, explain:"Turn right from east and you face south."},
+    {tier:"easy", q:"Which of these birds can fly?", options:["Ostrich","Penguin","Owl","Emu"], correct:2, explain:"An owl flies; the other three are flightless birds."},
+    {tier:"easy", q:"Which pair uses exactly the same letters?", options:["LISTEN / SILENT","COLD / CLOUD","MOUSE / HOUSE","TIGER / TIGGER"], correct:0, explain:"LISTEN and SILENT are anagrams."},
+    {tier:"medium", q:"Which statement is always true?", options:["Every square is a rectangle","Every rectangle is a square","No squares have corners","A triangle has four sides"], correct:0, explain:"Squares are special rectangles with four equal sides."},
+    {tier:"medium", q:"Which word contains all five vowels exactly once?", options:["EDUCATION","QUESTION","CREATION","LANTERN"], correct:0, explain:"EDUCATION contains E, U, A, I and O—each once."},
+    {tier:"medium", q:"What letter completes the pattern? Z, X, U, Q, ?", options:["M","L","N","O"], correct:1, explain:"The gaps move backward 2, 3, 4, then 5 letters."},
+    {tier:"medium", q:"Which pair of words are opposites?", options:["Expand / Shrink","Rise / Lift","Quiet / Silent","Bright / Vivid"], correct:0, explain:"Expand means grow; shrink means get smaller."},
+    {tier:"medium", q:"Three brothers share one sister. How many children are in their family?", options:["3","4","5","6"], correct:1, explain:"Three brothers plus one sister makes four children."},
+    {tier:"medium", q:"Which pair is an anagram?", options:["PEAR / REAP","BIRD / BRIDE","LAMP / MAPLE","STONE / STOVE"], correct:0, explain:"PEAR and REAP use exactly the same four letters."},
+    {tier:"hard", q:"Which word becomes another everyday word when spelled backward?", options:["STRESSED","WINDOW","PURPLE","ORANGE"], correct:0, explain:"STRESSED backward spells DESSERTS."},
+    {tier:"hard", q:"What comes next? J, F, M, A, M, J, J, A, ?", options:["S","O","N","D"], correct:0, explain:"The letters start the months from January to August; September is next."},
+    {tier:"hard", q:"Every ZORP is a FIZZ. No FIZZ can swim. Can a ZORP swim?", options:["Always","Sometimes","Never","Only adults"], correct:2, explain:"Since all zorps are fizzes, and no fizz swims, no zorp swims."},
+    {tier:"hard", q:"Which phrase reads the same backward when spaces are ignored?", options:["NEVER ODD OR EVEN","THE LONG ROAD","RUN TO WIN","LATER TONIGHT"], correct:0, explain:"NEVERODDOREVEN is a palindrome."},
+    {tier:"hard", q:"All X are Y. Some Y are Z. What MUST follow?", options:["All X are Z","Some X are Z","No X are Z","None of these"], correct:3, explain:"The Y objects that are Z might not include any X objects."},
+    {tier:"hard", q:"A person always lies. They say 'We are both liars.' Could they be the liar?", options:["Yes","No","Only if both lie","Not enough information"], correct:0, explain:"The statement is false because the other person cannot also be a liar if exactly one always lies."}
   ];
 
   const state = {
@@ -169,7 +185,7 @@
 
   function topbar(extra=""){
     return '<div class="topbar">'+
-      '<div class="brand"><span class="brand-mark">Q</span><div>QUICKTRAP<span class="brand-sub">working title • solve fast • set traps</span></div></div>'+
+      '<div class="brand"><span class="brand-mark">Q</span><div>MISSPICK<span class="brand-sub">working title • solve fast • call the miss</span></div></div>'+
       '<div class="top-actions">'+extra+'<button class="ghost-btn" data-action="rules">How to play</button></div>'+
     '</div>';
   }
@@ -178,15 +194,15 @@
     if(!state.modal) return "";
     return '<div class="modal-backdrop" data-action="close-rules">'+
       '<div class="modal" role="dialog" aria-modal="true" onclick="event.stopPropagation()">'+
-        '<div class="modal-head"><h2>How QUICKTRAP works</h2><button class="icon-btn" data-action="close-rules" aria-label="Close">✕</button></div>'+
+        '<div class="modal-head"><h2>How MISSPICK works</h2><button class="icon-btn" data-action="close-rules" aria-label="Close">✕</button></div>'+
         '<ol>'+
           '<li><b>Solve the puzzle.</b> Everyone gets the same four-choice brain teaser and a short countdown.</li>'+
-          '<li><b>Correct = +1.</b> The fastest correct player gets <b>+2 more</b>.</li>'+
-          '<li><b>Solve early? Set a trap.</b> Pick one wrong answer you think another player will choose. Traps are secret.</li>'+
-          '<li><b>Catch someone.</b> Each opponent who lands on your trapped answer gives you +1, up to +2 per round. Anyone who steps on at least one trap loses 1 point, but scores never go below zero.</li>'+
-          '<li>There are <b>'+TOTAL_ROUNDS+' rounds</b>. The last is a faster Lightning Round.</li>'+
+          '<li><b>Right answer: +1 point.</b> <b>Fastest right answer: +2 bonus points.</b></li>'+
+          '<li><b>Solve early? Call a miss.</b> Predict which WRONG answer another player will pick. Your prediction is secret until the reveal.</li>'+
+          '<li><b>Called it!</b> Earn +1 for each person who makes the wrong choice you predicted (up to +2 each round). Anyone whose mistake was correctly predicted loses 1 point (minimum score: zero).</li>'+
+          '<li>There are <b>'+TOTAL_ROUNDS+' rounds</b>. Everyone confirms they are ready before the next round. The last is a faster Lightning Round.</li>'+
         '</ol>'+
-        '<p>That is the entire game: <b>solve fast, then weaponize the best wrong answer.</b></p>'+
+        '<p>That is the entire game: <b>solve fast, then predict your friends’ mistakes.</b></p>'+
       '</div>'+
     '</div>';
   }
@@ -198,22 +214,22 @@
       '<section class="hero">'+
         '<div class="hero-card">'+
           '<div class="eyebrow">LIVE MULTIPLAYER • 2–8 PLAYERS</div>'+
-          '<h1>Solve it.<br><span class="gradient-text">Then bait your friends.</span></h1>'+
-          '<p class="lead">Everybody gets the same tiny puzzle. Get it right fast enough and you earn the right to booby-trap a wrong answer.</p>'+
+          '<h1>Solve it.<br><span class="gradient-text">Call their mistake.</span></h1>'+
+          '<p class="lead">Everybody solves the same tiny puzzle. Get it right early, then predict the wrong answer someone else will choose.</p>'+
           '<div class="hero-actions">'+
             '<button class="primary-btn" data-action="host" '+(state.joining?"disabled":"")+'>'+(state.joining?"Creating room…":"Create a room")+'</button>'+
             '<button class="secondary-btn" data-action="focus-join" '+(state.joining?"disabled":"")+'>Join a room</button>'+
           '</div>'+
           '<div class="rule-strip">'+
             '<div class="rule-chip"><b>1. THINK</b><span>One puzzle. Four answers. Beat the clock.</span></div>'+
-            '<div class="rule-chip"><b>2. TRAP</b><span>Correct early? Secretly trap a tempting wrong answer.</span></div>'+
-            '<div class="rule-chip"><b>3. REVEAL</b><span>See who was fastest—and who walked straight into your bait.</span></div>'+
+            '<div class="rule-chip"><b>2. CALL IT</b><span>Correct early? Predict a tempting wrong answer.</span></div>'+
+            '<div class="rule-chip"><b>3. REVEAL</b><span>Find out who you read perfectly—and who got caught guessing.</span></div>'+
           '</div>'+
         '</div>'+
         '<div class="side-stack">'+
           '<div class="mini-card"><strong>🧠 Feel smart</strong><p>Patterns, logic, wordplay and compact brain teasers—not obscure trivia.</p></div>'+
           '<div class="mini-card"><strong>⏱️ 8 quick rounds</strong><p>About four minutes. The last round gets brutally short.</p></div>'+
-          '<div class="mini-card"><strong>🪤 Steal momentum</strong><p>Good traps can score for you and knock a point off somebody else.</p></div>'+
+          '<div class="mini-card"><strong>🎯 Call the miss</strong><p>Correct predictions earn you points—and cost opponents one.</p></div>'+
         '</div>'+
       '</section>'+
       '<section class="card join-panel" id="join-panel">'+
@@ -249,9 +265,9 @@
         '<div class="card">'+
           '<h3>You only need to know this</h3>'+
           '<div class="explain-list">'+
-            '<div class="explain-item"><div class="explain-num">1</div><div><b>Tap the correct answer fast.</b><span>Correct is worth +1. Fastest correct gets +2 more.</span></div></div>'+
-            '<div class="explain-item"><div class="explain-num">2</div><div><b>If you are correct early, set a trap.</b><span>Pick the wrong answer most likely to fool somebody else.</span></div></div>'+
-            '<div class="explain-item"><div class="explain-num">3</div><div><b>Laugh at the reveal.</b><span>Your trap can score bonus points and cost the victim a point.</span></div></div>'+
+            '<div class="explain-item"><div class="explain-num">1</div><div><b>Tap the correct answer fast.</b><span>Right answer: +1 point. Fastest right answer: +2 bonus points.</span></div></div>'+
+            '<div class="explain-item"><div class="explain-num">2</div><div><b>If you get it right early, call a miss.</b><span>Guess which wrong answer somebody else will pick.</span></div></div>'+
+            '<div class="explain-item"><div class="explain-num">3</div><div><b>Find out who called it.</b><span>Get +1 per correct prediction (up to +2). That player loses 1 point.</span></div></div>'+
           '</div>'+
         '</div>'+
       '</section>'+
@@ -276,15 +292,15 @@
         answerGrid(g.puzzle,me);
     }else if(trapOpen){
       taskHtml =
-        '<div class="success-banner"><div class="success-icon">✓</div><div><b>CORRECT — NOW SET THE TRAP.</b><span>Pick a WRONG answer you think somebody else will choose.</span></div></div>'+
+        '<div class="success-banner"><div class="success-icon">✓</div><div><b>RIGHT! NOW CALL A MISS.</b><span>Which WRONG answer do you predict someone else picked?</span></div></div>'+
         '<div class="trap-grid">'+g.puzzle.options.map((opt,i)=>{
           if(i===me.answer.choice) return '<div class="answer-card correct-locked"><span class="answer-letter">'+String.fromCharCode(65+i)+'</span><span><b>'+esc(opt)+'</b><small>Your correct answer</small></span></div>';
-          return '<button class="answer-card trap-btn" data-action="trap" data-choice="'+i+'"><span class="answer-letter">🪤</span><span><b>'+esc(opt)+'</b><small>Trap this wrong answer</small></span></button>';
+          return '<button class="answer-card trap-btn" data-action="trap" data-choice="'+i+'"><span class="answer-letter">🎯</span><span><b>'+esc(opt)+'</b><small>Predict this wrong answer</small></span></button>';
         }).join("")+'</div>'+
-        '<div class="trap-clock">Trap window: <b id="trap-time">—</b></div>';
+        '<div class="trap-clock">Prediction window: <b id="trap-time">—</b></div>';
     }else if(correct){
       taskHtml =
-        '<div class="success-banner"><div class="success-icon">✓</div><div><b>CORRECT.</b><span>'+(lateCorrect?"You got it—but not early enough to set a trap.":"Trap locked. Now watch the clock and hope somebody takes the bait.")+'</span></div></div>'+
+        '<div class="success-banner"><div class="success-icon">✓</div><div><b>CORRECT.</b><span>'+(lateCorrect?"Correct! You were too late to make a prediction.":"Prediction locked. Let's see who chose it.")+'</span></div></div>'+
         answerGrid(g.puzzle,me,true);
     }else{
       taskHtml =
@@ -301,7 +317,7 @@
         '<h2 class="puzzle-question">'+esc(g.puzzle.q)+'</h2>'+
         taskHtml+
       '</section>'+
-      '<section class="card status-card"><div><b>'+statusTitle(me)+'</b><div class="status-text">'+g.status.answered+' of '+ps.players.length+' answers locked • '+g.status.traps+' trap'+(g.status.traps===1?"":"s")+' armed</div></div><div class="dots">'+Array.from({length:ps.players.length},(_,i)=>'<span class="dot '+(i<g.status.answered?"done":"")+'"></span>').join("")+'</div></section>'+
+      '<section class="card status-card"><div><b>'+statusTitle(me)+'</b><div class="status-text">'+g.status.answered+' of '+ps.players.length+' answers locked • '+g.status.traps+' prediction'+(g.status.traps===1?"":"s")+' locked</div></div><div class="dots">'+Array.from({length:ps.players.length},(_,i)=>'<span class="dot '+(i<g.status.answered?"done":"")+'"></span>').join("")+'</div></section>'+
       (state.error?'<div class="error-box">'+esc(state.error)+'</div>':"")+
       rulesModal()+
     '</div></main>';
@@ -309,8 +325,8 @@
 
   function statusTitle(me){
     if(!me.answer) return "Solve it before time runs out.";
-    if(me.answer.correct && me.trap != null) return "Correct. Trap armed.";
-    if(me.answer.correct && me.answer.trapEligible) return "Correct. Choose your trap.";
+    if(me.answer.correct && me.trap != null) return "Correct. Prediction locked.";
+    if(me.answer.correct && me.answer.trapEligible) return "Correct. Pick a wrong answer to predict.";
     if(me.answer.correct) return "Correct. Locked in.";
     return "Answer locked.";
   }
@@ -345,7 +361,7 @@
           const pickers = r.players.filter(p=>p.choice===i);
           const traps = r.players.filter(p=>p.trap===i);
           return '<div class="reveal-option '+(i===r.correct?"is-correct":"")+'">'+
-            '<div class="reveal-option-head"><span class="answer-letter">'+String.fromCharCode(65+i)+'</span><b>'+esc(opt)+'</b>'+(traps.length?'<span class="trap-marker">🪤 '+traps.length+'</span>':"")+'</div>'+
+            '<div class="reveal-option-head"><span class="answer-letter">'+String.fromCharCode(65+i)+'</span><b>'+esc(opt)+'</b>'+(traps.length?'<span class="trap-marker">🎯 '+traps.length+'</span>':"")+'</div>'+
             '<div class="picker-row">'+(pickers.length?pickers.map(p=>'<span class="person-chip '+(p.trapped?"caught":"")+'">'+esc(p.name)+(p.trapped?" 💥":"")+'</span>').join(""):'<span class="small">Nobody chose this</span>')+'</div>'+
           '</div>';
         }).join("")+'</div>'+
@@ -368,8 +384,8 @@
     else if(p.choice==null) bits.push("no answer");
     else bits.push("wrong");
     if(p.fastest) bits.push("fastest +2");
-    if(p.trapHits>0) bits.push("trap caught "+p.trapHits);
-    if(p.trapped) bits.push("hit a trap −1");
+    if(p.trapHits>0) bits.push("called misses: "+p.trapHits);
+    if(p.trapped) bits.push("mistake predicted −1");
     return bits.join(" • ");
   }
 
@@ -392,15 +408,15 @@
     return '<main class="page"><div class="game-wrap">'+
       topbar('<span class="tag">FINAL</span>')+
       '<section class="card final-hero">'+
-        '<div class="trophy">🧠🪤</div>'+
-        '<h1>'+(winners.length>1?"Dead heat.":esc(winners[0].name)+" wins QUICKTRAP.")+'</h1>'+
+        '<div class="trophy">🧠🎯</div>'+
+        '<h1>'+(winners.length>1?"Dead heat.":esc(winners[0].name)+" wins MISSPICK.")+'</h1>'+
         '<p class="lead final-lead">'+(winners.length>1?esc(winners.map(p=>p.name).join(" and "))+" tied at "+top+" points.":esc(winners[0].name)+" finished with "+top+" points.")+'</p>'+
         '<div class="stat-ribbon">'+
           '<div class="stat-box"><strong>#'+meRank+'</strong><span>Your finish</span></div>'+
           '<div class="stat-box"><strong>'+me.score+'</strong><span>Your score</span></div>'+
-          '<div class="stat-box"><strong>'+me.trapHits+'</strong><span>People you trapped</span></div>'+
+          '<div class="stat-box"><strong>'+me.trapHits+'</strong><span>Misses you called</span></div>'+
         '</div>'+
-        '<div class="award-row"><span>⚡ Speed demon: <b>'+esc(speedKing?.name||"—")+'</b> ('+(speedKing?.fastestWins||0)+')</span><span>🪤 Master baiter: <b>'+esc(trapKing?.name||"—")+'</b> ('+(trapKing?.trapHits||0)+')</span></div>'+
+        '<div class="award-row"><span>⚡ Speed demon: <b>'+esc(speedKing?.name||"—")+'</b> ('+(speedKing?.fastestWins||0)+')</span><span>🎯 Sharpest Predictor: <b>'+esc(trapKing?.name||"—")+'</b> ('+(trapKing?.trapHits||0)+')</span></div>'+
       '</section>'+
       leaderboard(ps)+
       '<div class="actions-center">'+(state.mode==="host"?'<button class="primary-btn" data-action="rematch">Play again</button>':"")+'<button class="secondary-btn" data-action="leave">Leave room</button></div>'+
@@ -528,11 +544,19 @@
     });
   }
 
+  // Mix puzzle types deliberately: at most two number-pattern/math questions
+  // in an eight-round match, instead of a mostly-arithmetic deck.
+  function numberPuzzle(p){
+    return /^(What comes next\?  [0-9]|If 2 →|5 machines|3 cats|A bat and ball|What is 30|Five people each shake|At exactly 3:15|A cube is painted|These numbers are|You have 12 eggs)/.test(p.q);
+  }
+
   function buildDeck(){
-    const easy=shuffle(PUZZLES.map((p,i)=>p.tier==="easy"?i:null).filter(i=>i!=null)).slice(0,2);
-    const medium=shuffle(PUZZLES.map((p,i)=>p.tier==="medium"?i:null).filter(i=>i!=null)).slice(0,4);
-    const hard=shuffle(PUZZLES.map((p,i)=>p.tier==="hard"?i:null).filter(i=>i!=null)).slice(0,2);
-    return [...easy,...medium,...hard];
+    const ids=(tier,isNumber)=>shuffle(PUZZLES.map((p,i)=>p.tier===tier && numberPuzzle(p)===isNumber?i:null).filter(i=>i!=null));
+    const easy=ids("easy",false).slice(0,2);
+    const medium=shuffle([...ids("medium",false).slice(0,3),...ids("medium",true).slice(0,1)]);
+    const hardNumber=ids("hard",true).slice(0,1);
+    const hardWords=ids("hard",false).slice(0,1);
+    return [...easy,...medium,...hardNumber,...hardWords];
   }
 
   function preparePuzzle(index){
