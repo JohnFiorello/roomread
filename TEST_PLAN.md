@@ -1,32 +1,16 @@
-# QUICKTRAP Test Plan
+# MISSPICK Multiplayer Test Plan
 
-## Core two-device test
+1. Host creates room. Guest joins from separate browser/network.
+2. Start game: same question and synchronized countdown.
+3. Host answers correctly and early. Verify **CALL A MISS** appears only on host's screen.
+4. Host selects a wrong answer as their prediction. Guest chooses that wrong answer.
+5. Confirm reveal shows correct answer, both choices, successful prediction, and +1/−1 effects.
+6. On reveal, host clicks **I'm ready for next round**. Confirm both players STAY on reveal.
+7. Guest clicks **I'm ready for next round**. Confirm both move to next round together.
+8. Verify ready indicators and counters are synchronized (0/2, 1/2, then transition).
+9. Repeat through eight rounds, with a faster final Lightning timer.
+10. Both confirm ready after last round; final leaderboard appears on both devices.
+11. Scores never negative, prediction bonuses capped at +2 per round.
+12. Rematch resets scores and selected questions.
 
-1. Device A creates a room.
-2. Device B joins with the six-character room code.
-3. Host starts.
-4. Confirm both devices see the same puzzle and countdown.
-5. Answer correctly early on one device.
-6. Confirm that device immediately gets the trap phase while the other device does not see the answer or trap.
-7. Place a trap on a wrong answer.
-8. Have the other player choose that wrong answer.
-9. Confirm the reveal shows the correct answer, fastest player, trap placement, trapped player, and both score changes.
-10. Play through all eight rounds and confirm round 8 uses the shorter Lightning timer.
-11. Confirm final leaderboard, fastest-wins count, and trap-hit count match on both devices.
-12. Use Play Again and confirm a fresh puzzle deck and reset scores.
-
-## Edge checks
-
-- Wrong answer locks; no retry.
-- Correct answer too late does not receive a trap opportunity.
-- Trap cannot be placed on the correct answer.
-- Trap window expires after about 3.2 seconds.
-- A trapped player loses at most 1 point in a round.
-- Scores never go below zero.
-- A trapper earns at most 2 trap points in one round.
-- Invalid room code fails clearly.
-- Ninth player is rejected.
-- Invite link pre-fills the room code.
-- Host disconnect ends the room cleanly.
-- Mobile buttons remain comfortably tappable.
-- No client receives the correct-answer index before reveal.
+Also test expired prediction window, invalid code, late answers, ninth player, rejoin while host remains connected, and phone layout. The normal lobby starts when host clicks Start.
