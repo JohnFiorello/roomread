@@ -1,10 +1,14 @@
+
 # Handshake Submission Copy
 
 ## Project title
-ROOMREAD — Read the Room
+ODD MOTIVES — Same Map. Different Goals.
 
-## Description (under 500 chars)
-ROOMREAD is a live 2–8 player social game about the gap between what you want and what you think everyone else wants. Vote your truth, predict the room, then reveal the group split in real time. Correct reads score points; correctly reading the room while disagreeing earns a bonus. No login or install—join from any phone or laptop with a room code. Built for fast, replayable icebreakers with clear rules and a polished mobile-first UI.
+## Description
+ODD MOTIVES is a live 2–8 player bluffing game where everyone sees the same four places but gets a different secret objective. Signal where you want the room to go, study everyone else’s signals, then secretly make your real move. Score by completing your hidden motive—go solo, form a pair, join the crowd, shadow someone, dodge them, and more. Pull off the objective while misleading the room for a bonus. No login or install.
 
-## Suggested cover screenshot
-Use the home screen showing “Read the room. Trust your gut.” plus the three-rule strip. A second strong option is a reveal screen with live vote bars and the leaderboard.
+## Suggested cover image
+Use the live game’s opening screen or a reveal screen showing all four zones, player tokens, and the “ODD MOTIVES” title.
+
+## Project URL
+https://johnfiorello.github.io/roomread/
