@@ -1,14 +1,13 @@
+# Handshake Submission Draft
 
-# Handshake Submission Copy
+## Working title
+QUICKTRAP — Solve Fast. Set Traps.
 
-## Project title
-ODD MOTIVES — Same Map. Different Goals.
+## Current description
+QUICKTRAP is a live 2–8 player brain-game where everyone races to solve the same tiny puzzle. Get it right early and you unlock a second move: secretly trap one wrong answer you think a friend will choose. At the reveal, fastest answers score, traps spring, victims lose a point, and the leaderboard shifts. Eight short rounds mix logic, patterns and wordplay, ending in a Lightning Round. No login or install.
 
-## Description
-ODD MOTIVES is a live 2–8 player bluffing game where everyone sees the same four places but gets a different secret objective. Signal where you want the room to go, study everyone else’s signals, then secretly make your real move. Score by completing your hidden motive—go solo, form a pair, join the crowd, shadow someone, dodge them, and more. Pull off the objective while misleading the room for a bonus. No login or install.
-
-## Suggested cover image
-Use the live game’s opening screen or a reveal screen showing all four zones, player tokens, and the “ODD MOTIVES” title.
-
-## Project URL
+## Current public URL
 https://johnfiorello.github.io/roomread/
+
+## Note
+Title is intentionally still treated as a working title until playtesting confirms the core game is fun.
