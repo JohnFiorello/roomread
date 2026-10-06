@@ -87,7 +87,7 @@ const correctFor = (q, options) => {
       const correct = correctFor(q, optionTexts);
       if(!correct) throw new Error("No E2E answer mapping for: "+q+" options="+optionTexts.join("|"));
 
-      const hostCorrect = host.locator(".answer-btn").filter({hasText:correct});
+      const exact = text => new RegExp("^"+text.replace(/[.*+?^${}()|[\\]\\]/g,"\\const hostCorrect = host.locator(".answer-btn").filter({hasText:correct});")+"$");\n      const hostCorrect = host.locator(".answer-btn").filter({has:host.locator("b").filter({hasText:exact(correct)})});
       await hostCorrect.click({timeout:10000});
 
       await host.getByText("CORRECT — NOW SET THE TRAP.").waitFor({timeout:5000});
@@ -95,7 +95,7 @@ const correctFor = (q, options) => {
       const trapText = (await trapButton.locator("b").textContent()).trim();
       await trapButton.click();
 
-      const guestWrong = guest.locator(".answer-btn").filter({hasText:trapText});
+      const guestWrong = guest.locator(".answer-btn").filter({has:guest.locator("b").filter({hasText:exact(trapText)})});
       await guestWrong.click({timeout:5000});
 
       await host.locator(".correct-answer").waitFor({timeout:10000});
