@@ -139,3 +139,15 @@ h1{font-size:clamp(46px,8vw,86px);line-height:.9;letter-spacing:-.058em;margin:1
   .timer-num{font-size:29px}.round-head{align-items:center}.status-card{align-items:flex-start;flex-direction:column}
 }
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+/* Shared round-results readiness gate */
+.ready-card{margin-top:15px;padding:22px}
+.ready-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.ready-head h3{margin:0 0 5px;font-size:20px}
+.ready-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.5;max-width:600px}
+.ready-head .tag{flex:0 0 auto}
+.ready-roster{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.ready-person{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;padding:7px 11px;background:#0f1324;color:var(--muted);font-size:12px;font-weight:850}
+.ready-person.ready{border-color:rgba(217,255,87,.4);color:var(--lime);background:rgba(217,255,87,.06)}
+.ready-card .actions-center{margin-top:18px}
+@media(max-width:480px){.ready-head{flex-direction:column;gap:10px}.ready-card{padding:18px}}
