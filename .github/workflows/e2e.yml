@@ -1,0 +1,43 @@
+
+name: Multiplayer E2E
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app.js"
+      - "index.html"
+      - "styles.css"
+      - ".github/tests/e2e.js"
+      - ".github/workflows/e2e.yml"
+  workflow_dispatch:
+
+jobs:
+  multiplayer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out game
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install --save-dev playwright
+          npx playwright install --with-deps chromium
+
+      - name: Run two-browser multiplayer test
+        run: node .github/tests/e2e.js
+
+      - name: Upload test screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: odd-motives-e2e-screens
+          path: e2e-*.png
+          if-no-files-found: ignore
