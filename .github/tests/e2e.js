@@ -103,16 +103,17 @@ const correctFor = (q, options) => {
       const correct = correctFor(q, optionTexts);
       if(!correct) throw new Error("No E2E answer mapping for: "+q+" options="+optionTexts.join("|"));
 
-      const hostCorrect = host.getByText(correct,{exact:true}).locator("..");
-      await hostCorrect.click({timeout:10000});
+      const answerIndex = optionTexts.findIndex(x=>x.trim()===correct);
+      if(answerIndex<0) throw new Error("Correct option missing from rendered list: "+correct);
+      await host.locator(".answer-btn").nth(answerIndex).click({timeout:10000});
 
       await host.getByText("RIGHT! NOW CALL A MISS.").waitFor({timeout:5000});
       const trapButton = host.locator(".trap-btn").first();
-      const trapText = (await trapButton.locator("b").textContent()).trim();
+      const trapChoice = Number(await trapButton.getAttribute("data-choice"));
+      if(!Number.isInteger(trapChoice)||trapChoice===answerIndex) throw new Error("Invalid prediction choice: "+trapChoice);
       await trapButton.click();
 
-      const guestWrong = guest.getByText(trapText,{exact:true}).locator("..");
-      await guestWrong.click({timeout:5000});
+      await guest.locator(".answer-btn").nth(trapChoice).click({timeout:5000});
 
       await host.locator(".correct-answer").waitFor({timeout:10000});
       await guest.locator(".correct-answer").waitFor({timeout:10000});
