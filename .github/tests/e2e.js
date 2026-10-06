@@ -132,8 +132,9 @@ const correctFor = (q, options) => {
       // When both are ready, the host automatically starts the next round.
       await guest.getByRole("button",{name:/ready for (the next round|final results)/i}).click();
       if(round<8){
-        await host.getByText("ROUND "+(round+1)+" OF 8").waitFor({timeout:12000});
-        await guest.getByText("ROUND "+(round+1)+" OF 8").waitFor({timeout:12000});
+        const label = round===7 ? "⚡ LIGHTNING ROUND" : "ROUND "+(round+1)+" OF 8";
+        await host.getByText(label).waitFor({timeout:12000});
+        await guest.getByText(label).waitFor({timeout:12000});
       }
 
     }
