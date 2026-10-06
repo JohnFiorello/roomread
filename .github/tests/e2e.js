@@ -2,19 +2,22 @@
 const { chromium } = require("playwright");
 const { spawn } = require("child_process");
 
-const server = spawn("python3", ["-m","http.server","8000","--bind","127.0.0.1"], {stdio:"inherit"});
+const liveBase = process.env.BASE_URL || "";
+const server = liveBase ? null : spawn("python3", ["-m","http.server","8000","--bind","127.0.0.1"], {stdio:"inherit"});
+const base = liveBase || "http://127.0.0.1:8000/";
 const sleep = ms => new Promise(r => setTimeout(r,ms));
 
 (async () => {
-  await sleep(1200);
+  if(server) await sleep(1200);
   const browser = await chromium.launch({headless:true});
   const host = await browser.newPage();
   const guest = await browser.newPage();
-  const base = "http://127.0.0.1:8000/";
 
   try {
-    await host.goto(base, {waitUntil:"networkidle"});
-    await guest.goto(base, {waitUntil:"networkidle"});
+    await host.goto(base, {waitUntil:"networkidle", timeout:30000});
+    await guest.goto(base, {waitUntil:"networkidle", timeout:30000});
+
+    if(!((await host.title()) || "").includes("ODD MOTIVES")) throw new Error("Live page is not ODD MOTIVES: "+await host.title());
 
     await host.locator("#name").fill("HostBot");
     await host.getByRole("button",{name:"Create a room"}).click();
@@ -56,13 +59,13 @@ const sleep = ms => new Promise(r => setTimeout(r,ms));
     await guest.getByText("Average room scatter").waitFor({timeout:10000});
     await host.screenshot({path:"e2e-final.png",fullPage:true});
 
-    console.log("ODD MOTIVES E2E PASS: real PeerJS room, two isolated browser pages, five rounds, synchronized final.");
+    console.log("ODD MOTIVES E2E PASS against "+base+": real PeerJS room, two isolated browser pages, five rounds, synchronized final.");
   } finally {
     await browser.close();
-    server.kill("SIGTERM");
+    if(server) server.kill("SIGTERM");
   }
 })().catch(err => {
   console.error(err);
-  server.kill("SIGTERM");
+  if(server) server.kill("SIGTERM");
   process.exit(1);
 });
