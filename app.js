@@ -3,7 +3,7 @@
 
   const MAX_PLAYERS = 8;
   const TOTAL_ROUNDS = 8;
-  const PEER_PREFIX = "quicktrap-";
+  const PEER_PREFIX = "misspick-";
   const ROOM_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const TRAP_WINDOW_MS = 3200;
 
@@ -91,10 +91,10 @@
   const $toast = document.getElementById("toast");
 
   function getToken(){
-    let t = localStorage.getItem("quicktrap-token");
+    let t = localStorage.getItem("misspick-token");
     if(!t){
       t = randomString(18);
-      localStorage.setItem("quicktrap-token",t);
+      localStorage.setItem("misspick-token",t);
     }
     return t;
   }
@@ -185,7 +185,7 @@
 
   function topbar(extra=""){
     return '<div class="topbar">'+
-      '<div class="brand"><span class="brand-mark">Q</span><div>MISSPICK<span class="brand-sub">working title • solve fast • call the miss</span></div></div>'+
+      '<div class="brand"><span class="brand-mark">M</span><div>MISSPICK<span class="brand-sub">working title • solve fast • call the miss</span></div></div>'+
       '<div class="top-actions">'+extra+'<button class="ghost-btn" data-action="rules">How to play</button></div>'+
     '</div>';
   }
@@ -288,7 +288,7 @@
     let taskHtml = "";
     if(!answered){
       taskHtml =
-        '<div class="instruction"><b>Pick the correct answer.</b><span>Fastest correct gets the biggest score.</span></div>'+
+        '<div class="instruction"><b>Find the right answer.</b><span>Right answer +1 • Fastest right answer +2 extra</span></div>'+
         answerGrid(g.puzzle,me);
     }else if(trapOpen){
       taskHtml =
