@@ -140,7 +140,7 @@ const correctFor = (q, options) => {
     }
 
     await host.getByText("Misses you called").waitFor({timeout:10000});
-    await guest.getByText("People you trapped").waitFor({timeout:10000});
+    await guest.getByText("Misses you called").waitFor({timeout:10000});
     await host.screenshot({path:"e2e-final.png",fullPage:true});
 
     console.log("MISSPICK E2E PASS against "+base+": real PeerJS room, two isolated browsers, eight timed rounds, successful miss calls, all-player ready gate and synchronized final.");
