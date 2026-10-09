@@ -1,12 +1,20 @@
-# Handshake Submission Draft — Work in Progress
+# Handshake Submission — Final Copy
 
-## Working title
+## Project title
 MISSPICK — Solve Fast. Call the Miss.
 
-## Project description (draft)
-MISSPICK is a live 2–8 player game of fast brain teasers and even faster predictions. Everyone races to solve the same puzzle. Solve it early and you can predict which wrong answer another player will pick. At the reveal, correct answers score, accurate predictions earn bonus points, and anyone whose mistake was called loses a point. Eight quick rounds mix wordplay, logic, patterns, and a Lightning finale. Everyone confirms they're ready before the next round. No login or install.
+## Project description
+MISSPICK is a live 2–8 player brain game where everybody races to solve the same quick puzzle. Get it right early and you can “Call a Miss” by predicting which wrong answer another player will choose. Correct answers score, the fastest player gets a bonus, and accurate miss-calls can steal momentum from friends. Eight rapid rounds mix wordplay, logic, patterns and a Lightning finale. No login or install.
 
-## Current public URL
+## Public project URL
 https://johnfiorello.github.io/roomread/
 
-The final title, gameplay screenshot and submission materials will be polished after group playtesting.
+## Cover image
+Use the final live-game screenshot from the automated multiplayer run after the arcade redesign. Best frame: an active question screen showing the top player score panels, timer, four colored answer pads, and MISSPICK branding.
+
+## Submission checklist
+- Title: MISSPICK — Solve Fast. Call the Miss.
+- Description: use the paragraph above.
+- URL: https://johnfiorello.github.io/roomread/
+- Cover: final active-game screenshot.
+- Verify the public URL on desktop and mobile before pressing Submit.
