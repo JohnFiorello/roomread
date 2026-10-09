@@ -99,6 +99,9 @@ const correctFor = (q, options) => {
       const qEl = host.locator(".puzzle-question");
       await qEl.waitFor({timeout:10000});
       const q = (await qEl.textContent()).trim();
+      if(round===3){
+        await host.screenshot({path:"e2e-cover.png",fullPage:false});
+      }
       const optionTexts = await host.locator(".answer-btn b").allTextContents();
       const correct = correctFor(q, optionTexts);
       if(!correct) throw new Error("No E2E answer mapping for: "+q+" options="+optionTexts.join("|"));
