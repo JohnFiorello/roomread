@@ -1,24 +1,36 @@
-# MISSPICK (working title)
+# MISSPICK
 
-**Solve it first. Then call the miss.**
+**Solve fast. Call the miss.**
 
-A live multiplayer brain game for 2–8 people. Everyone gets the same timed four-choice puzzle. If you solve it early, you can **predict one wrong answer somebody else will pick**. Correct predictions give you points and cost the person who made that mistake a point.
+MISSPICK is a live 2–8 player multiplayer brain game built for fast, social rounds. Everyone gets the same timed four-choice puzzle. Get the right answer early and you unlock a second move: **Call a Miss** by predicting which wrong answer another player will choose.
 
 ## Scoring
 
-- Right answer **+1 point**.
-- Fastest right answer **+2 bonus points**.
-- A correct **Call a Miss** prediction: **+1 per person** (maximum +2 per round).
-- If someone correctly predicts your wrong answer: **−1 point**, scores never below zero.
-- Everyone clicks **I’m ready** after each reveal before the next round begins.
+- Right answer: **+1**
+- Fastest right answer: **+2 bonus**
+- Correct Call a Miss prediction: **+1 per player caught**, up to +2 per round
+- If someone correctly predicts your wrong answer: **−1**, with scores never below zero
+- Everyone confirms **Ready** before the next round
 
-Eight rounds, including a fast Lightning Round. A curated eight-round deck contains at most two number-heavy questions; the rest emphasizes wordplay, patterns, and compact logic.
+Eight rounds mix wordplay, logic, patterns and a limited amount of math, ending with a faster Lightning Round.
 
-## Implementation
+## Visual direction
 
-Static HTML/CSS/JavaScript, PeerJS/WebRTC, room codes, no account or install. One browser is host; 2–8 devices stay synchronized. The GitHub repository remains `roomread` while the name is still a working title. The published URL stays:
+The finished interface uses a neon late-80s/early-90s arcade-trivia aesthetic: bold colored answer pads, CRT scanlines, cabinet-style frames, and dynamic player score panels across the top. It deliberately avoids health bars or combat HUDs—the influence is arcade energy, not a literal fighting game.
+
+## Tech
+
+- Static HTML/CSS/JavaScript
+- PeerJS/WebRTC live multiplayer
+- Host-authoritative room state
+- 2–8 players
+- Room codes + invite links
+- Mobile-first responsive UI
+- Automated two-browser end-to-end multiplayer test
+- No login, install, database, or backend account
+
+## Play
+
 https://johnfiorello.github.io/roomread/
 
-## Playtest guidance
-
-Check that the new prediction language, ready gate, and timing are intuitive to people who haven't seen the rules. The [test plan](TEST_PLAN.md) covers the important sync and scoring edge cases.
+Built for the Handshake AI Skills Studio × OpenAI Multiplayer Game Challenge.
