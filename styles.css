@@ -1652,3 +1652,102 @@ body{
     font-size:8px;
   }
 }
+
+
+
+/* =========================================================
+   CONCEPT-MATCH PASS 3 — vertical proportions from approved mockup
+   ========================================================= */
+@media(min-width:981px) and (min-height:760px){
+  .arcade-game-scene .battle-meta{display:none}
+  .battle-header{
+    min-height:148px;
+    padding-top:4px;
+  }
+  .battle-roster{
+    min-height:140px;
+    grid-template-columns:minmax(0,1fr) 310px minmax(0,1fr);
+  }
+  .battle-logo-wrap{
+    width:310px;
+    height:118px;
+  }
+  .battle-logo{
+    font-size:70px;
+    padding-top:10px;
+  }
+  .battle-tagline{
+    font-size:9px;
+    margin-top:8px;
+  }
+  .arcade-player-card{
+    height:84px;
+    grid-template-columns:46px minmax(0,1fr) auto;
+    padding:8px 9px 8px 8px;
+  }
+  .arcade-player-avatar{
+    width:44px;height:44px;font-size:24px;
+  }
+  .arcade-player-copy b{font-size:13px}
+  .arcade-player-label{font-size:8px}
+  .arcade-player-score strong{font-size:27px}
+
+  .arena-layout{
+    margin-top:4px;
+  }
+  .round-chrome{
+    min-height:64px;
+    grid-template-columns:1fr 88px 1fr;
+    font-size:10px;
+  }
+  .timer-hex{
+    width:80px;height:70px;
+  }
+  .timer-hex strong{font-size:42px}
+  .puzzle-panel{
+    min-height:212px;
+    padding:26px 38px;
+  }
+  .puzzle-question{
+    font-size:clamp(34px,2.8vw,48px);
+  }
+  .answer-zone{
+    margin-top:11px;
+  }
+  .arcade-game-scene .answer-grid{
+    gap:10px;
+  }
+  .arcade-game-scene .answer-card{
+    min-height:92px;
+    padding:11px 14px;
+  }
+  .arcade-game-scene .answer-card b{font-size:20px}
+  .arcade-game-scene .answer-letter{
+    width:45px;height:45px;font-size:24px;
+  }
+  .score-callout{
+    min-height:46px;
+    margin-top:10px;
+    font-size:11px;
+  }
+  .call-miss-panel{
+    min-height:610px;
+    padding:10px;
+  }
+  .call-miss-logo{
+    font-size:33px;
+  }
+  .call-miss-logo span{font-size:47px}
+  .miss-fist{
+    width:130px;height:130px;font-size:82px;
+  }
+  .miss-panel-idle p,.miss-panel-live p{font-size:11px}
+  .miss-panel-idle strong,.miss-panel-live .miss-panel-title{font-size:15px}
+  .miss-panel-idle span{font-size:11px}
+  .miss-cta{min-height:44px;font-size:12px}
+  .status-ticker{
+    margin-top:9px;
+    min-height:25px;
+    font-size:8px;
+  }
+}
