@@ -190,25 +190,34 @@
     '</div>';
   }
 
+  function arcadePlayerCard(p,i){
+    return '<div class="arcade-player-card player-color-'+(i%8)+' '+(p.id===state.meId?"is-me":"")+'">'+
+      '<div class="arcade-player-avatar">'+esc(p.name.charAt(0).toUpperCase())+'</div>'+
+      '<div class="arcade-player-copy"><span class="arcade-player-label">P'+(i+1)+(p.id===state.meId?' • YOU':'')+'</span><b>'+esc(p.name)+'</b></div>'+
+      '<div class="arcade-player-score"><span>SCORE</span><strong>'+Number(p.score||0)+'</strong></div>'+
+    '</div>';
+  }
+
   function arcadePlayerStrip(ps){
     const players=ps?.players||[];
     if(!players.length) return "";
     return '<section class="arcade-score-strip" style="--player-count:'+players.length+'">'+
-      players.map((p,i)=>
-        '<div class="arcade-player-card player-color-'+(i%8)+' '+(p.id===state.meId?"is-me":"")+'">'+
-          '<div class="arcade-player-avatar">'+esc(p.name.charAt(0).toUpperCase())+'</div>'+
-          '<div class="arcade-player-copy"><span class="arcade-player-label">P'+(i+1)+(p.id===state.meId?' • YOU':'')+'</span><b>'+esc(p.name)+'</b></div>'+
-          '<div class="arcade-player-score"><span>SCORE</span><strong>'+Number(p.score||0)+'</strong></div>'+
-        '</div>'
-      ).join("")+
+      players.map((p,i)=>arcadePlayerCard(p,i)).join("")+
     '</section>';
   }
 
   function battleHeader(ps,extra=""){
+    const players=ps?.players||[];
+    const cut=Math.ceil(players.length/2);
+    const left=players.slice(0,cut);
+    const right=players.slice(cut);
     return '<header class="battle-header">'+
-      topbar(extra)+
-      '<div class="battle-logo-wrap"><div class="battle-logo">MISSPICK</div><div class="battle-tagline">SOLVE FAST • CALL THE MISS</div></div>'+
-      arcadePlayerStrip(ps)+
+      '<div class="battle-meta">'+extra+'<button class="ghost-btn" data-action="rules">HOW TO PLAY</button></div>'+
+      '<div class="battle-roster">'+
+        '<div class="roster-half roster-left">'+left.map((p,i)=>arcadePlayerCard(p,i)).join("")+'</div>'+
+        '<div class="battle-logo-wrap"><div class="battle-logo">MISSPICK</div><div class="battle-tagline">SOLVE FAST • CALL THE MISS</div></div>'+
+        '<div class="roster-half roster-right">'+right.map((p,i)=>arcadePlayerCard(p,cut+i)).join("")+'</div>'+
+      '</div>'+
     '</header>';
   }
 
@@ -317,10 +326,10 @@
 
     if(!answered){
       centerHtml =
-        '<div class="instruction score-callout"><b>RIGHT ANSWER <strong>+1</strong></b><span>FASTEST RIGHT ANSWER <strong>+2</strong></span></div>'+
-        answerGrid(g.puzzle,me);
+        answerGrid(g.puzzle,me)+
+        '<div class="instruction score-callout"><b>RIGHT ANSWER <strong>+1</strong></b><span>FASTEST RIGHT ANSWER <strong>+2</strong></span></div>';
       missHtml =
-        '<div class="miss-panel-idle"><div class="miss-burst">🎯</div><p>GET IT RIGHT EARLY TO UNLOCK</p><strong>CALL A MISS</strong><span>Predict the wrong answer somebody else will choose.</span></div>';
+        '<div class="miss-panel-idle"><div class="miss-fist">👊</div><p>THINK SOMEONE WILL PICK WRONG?</p><strong>CALL A MISS</strong><span>Get it right early, then predict their wrong answer.</span><button class="miss-cta" disabled>CALL A MISS</button></div>';
     }else if(trapOpen){
       centerHtml =
         '<div class="success-banner"><div class="success-icon">✓</div><div><b>RIGHT ANSWER!</b><span>Now read the room.</span></div></div>'+
@@ -336,12 +345,12 @@
       centerHtml =
         '<div class="success-banner"><div class="success-icon">✓</div><div><b>CORRECT.</b><span>'+(lateCorrect?"Too late to Call a Miss this round.":"Your Call a Miss prediction is locked.")+'</span></div></div>'+
         answerGrid(g.puzzle,me,true);
-      missHtml = '<div class="miss-panel-idle locked"><div class="miss-burst">✓</div><strong>'+(lateCorrect?"NO CALL THIS ROUND":"MISS CALLED")+'</strong><span>'+(lateCorrect?"You solved it after the prediction window closed.":"Prediction locked. Reveal incoming.")+'</span></div>';
+      missHtml = '<div class="miss-panel-idle locked"><div class="miss-fist small">✓</div><strong>'+(lateCorrect?"NO CALL THIS ROUND":"MISS CALLED")+'</strong><span>'+(lateCorrect?"You solved it after the prediction window closed.":"Prediction locked. Reveal incoming.")+'</span></div>';
     }else{
       centerHtml =
         '<div class="wrong-banner"><div class="wrong-icon">×</div><div><b>ANSWER LOCKED.</b><span>The right answer stays hidden until the reveal.</span></div></div>'+
         answerGrid(g.puzzle,me,true);
-      missHtml = '<div class="miss-panel-idle locked"><div class="miss-burst">×</div><strong>NO CALL THIS ROUND</strong><span>Call a Miss only unlocks after a correct early answer.</span></div>';
+      missHtml = '<div class="miss-panel-idle locked"><div class="miss-fist small">×</div><strong>NO CALL THIS ROUND</strong><span>Call a Miss only unlocks after a correct early answer.</span></div>';
     }
 
     return '<main class="page arcade-page">'+
