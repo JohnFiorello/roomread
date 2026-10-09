@@ -81,7 +81,8 @@ const correctFor = (q, options) => {
     if(!((await host.title()) || "").includes("MISSPICK")) throw new Error("Live page is not MISSPICK: "+await host.title());
 
     await host.locator("#name").fill("HostBot");
-    await host.getByRole("button",{name:"Create a room"}).click();
+    await host.screenshot({path:"e2e-home.png",fullPage:false});
+    await host.getByRole("button",{name:/create a room/i}).click();
     const roomEl = host.locator(".room-code");
     await roomEl.waitFor({timeout:15000});
     const room = (await roomEl.textContent()).trim();
@@ -89,16 +90,23 @@ const correctFor = (q, options) => {
 
     await guest.locator("#name").fill("GuestBot");
     await guest.locator("#room").fill(room);
-    await guest.getByRole("button",{name:"Join room"}).click();
+    await guest.getByRole("button",{name:/join room/i}).click();
 
-    await host.getByText("2 players ready").waitFor({timeout:20000});
-    await guest.getByText("2 players ready").waitFor({timeout:20000});
-    await host.getByRole("button",{name:"Start game"}).click();
+    await host.locator(".arcade-player-card").nth(1).waitFor({timeout:20000});
+    await guest.locator(".arcade-player-card").nth(1).waitFor({timeout:20000});
+    await host.getByText(/2 PLAYERS CONNECTED/i).waitFor({timeout:10000});
+    await host.screenshot({path:"e2e-lobby.png",fullPage:false});
+    await host.getByRole("button",{name:/start game/i}).click();
 
     for(let round=1; round<=8; round++){
       const qEl = host.locator(".puzzle-question");
       await qEl.waitFor({timeout:10000});
       const q = (await qEl.textContent()).trim();
+      if(round===1){
+        await host.evaluate(()=>window.scrollTo(0,0));
+        await host.waitForTimeout(1800);
+        await host.screenshot({path:"e2e-question.png",fullPage:false});
+      }
       if(round===3){
         await host.evaluate(()=>window.scrollTo(0,0));
         await host.waitForTimeout(1800);
@@ -112,7 +120,7 @@ const correctFor = (q, options) => {
       if(answerIndex<0) throw new Error("Correct option missing from rendered list: "+correct);
       await host.locator(".answer-btn").nth(answerIndex).click({timeout:10000});
 
-      await host.getByText("RIGHT! NOW CALL A MISS.").waitFor({timeout:5000});
+      await host.locator(".miss-panel-live").waitFor({timeout:5000});
       const trapButton = host.locator(".trap-btn").first();
       const trapChoice = Number(await trapButton.getAttribute("data-choice"));
       if(!Number.isInteger(trapChoice)||trapChoice===answerIndex) throw new Error("Invalid prediction choice: "+trapChoice);
