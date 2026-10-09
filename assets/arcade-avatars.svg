@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <symbol id="av0" viewBox="0 0 48 48">
+    <rect width="48" height="48" fill="#251132"/><rect x="10" y="9" width="28" height="31" fill="#d58b62"/>
+    <path d="M8 20V8h10V4h20v8h4v10h-7V13H18v7z" fill="#4a191e"/><rect x="14" y="22" width="6" height="4" fill="#151020"/><rect x="29" y="22" width="6" height="4" fill="#151020"/><rect x="20" y="32" width="10" height="3" fill="#7d2732"/><path d="M7 42h34v6H7z" fill="#ff405b"/>
+  </symbol>
+  <symbol id="av1" viewBox="0 0 48 48">
+    <rect width="48" height="48" fill="#0d1a33"/><rect x="11" y="10" width="27" height="30" fill="#b76e53"/>
+    <path d="M7 19L13 5h26l4 16-9-8-7 7-8-7-8 9z" fill="#612a88"/><rect x="14" y="23" width="6" height="4" fill="#111327"/><rect x="29" y="23" width="6" height="4" fill="#111327"/><rect x="21" y="32" width="9" height="3" fill="#6e2633"/><path d="M6 42h36v6H6z" fill="#00d9ff"/>
+  </symbol>
+  <symbol id="av2" viewBox="0 0 48 48">
+    <rect width="48" height="48" fill="#092820"/><rect x="10" y="11" width="28" height="29" fill="#7f503b"/>
+    <path d="M8 18V7h7V3h8v5h6V3h9v5h4v13h-7l-2-8H15l-1 8z" fill="#15191e"/><rect x="14" y="23" width="6" height="4" fill="#061a16"/><rect x="29" y="23" width="6" height="4" fill="#061a16"/><path d="M18 33h14v3H18z" fill="#40201a"/><path d="M6 42h36v6H6z" fill="#32f59a"/>
+  </symbol>
+  <symbol id="av3" viewBox="0 0 48 48">
+    <rect width="48" height="48" fill="#2b1037"/><rect x="11" y="9" width="27" height="31" fill="#d39a79"/>
+    <path d="M8 20L12 6l8-3 4 6 5-6 10 5 3 16-8-9-7 5-6-6-9 9z" fill="#1a3160"/><rect x="14" y="23" width="6" height="4" fill="#141029"/><rect x="29" y="23" width="6" height="4" fill="#141029"/><rect x="20" y="32" width="11" height="3" fill="#8a3444"/><path d="M6 42h36v6H6z" fill="#f04cff"/>
+  </symbol>
+  <symbol id="av4" viewBox="0 0 48 48">
+    <rect width="48" height="48" fill="#30160b"/><rect x="10" y="11" width="28" height="29" fill="#a96544"/>
+    <path d="M7 18V6h8V2h18v4h8v13l-8-6H16l-7 8z" fill="#ae4c12"/><rect x="14" y="23" width="6" height="4" fill="#1d1009"/><rect x="29" y="23" width="6" height="4" fill="#1d1009"/><path d="M18 32h14v3H18z" fill="#66301f"/><path d="M6 42h36v6H6z" fill="#ff9e29"/>
+  </symbol>
+  <symbol id="av5" viewBox="0 0 48 48">
+    <rect width="48" height="48" fill="#17133b"/><rect x="11" y="10" width="27" height="30" fill="#c18467"/>
+    <path d="M8 17l7-11h21l5 12-8-5-4 7-8-7-7 7z" fill="#d8d1ef"/><rect x="14" y="23" width="6" height="4" fill="#171330"/><rect x="29" y="23" width="6" height="4" fill="#171330"/><rect x="21" y="32" width="9" height="3" fill="#81394a"/><path d="M6 42h36v6H6z" fill="#8d7cff"/>
+  </symbol>
+  <symbol id="av6" viewBox="0 0 48 48">
+    <rect width="48" height="48" fill="#09252a"/><rect x="10" y="10" width="28" height="30" fill="#8a5948"/>
+    <path d="M7 17V7l8-4 8 6 7-6 11 5v13l-8-7-8 7-8-7-8 8z" fill="#113f4a"/><rect x="14" y="23" width="6" height="4" fill="#092026"/><rect x="29" y="23" width="6" height="4" fill="#092026"/><rect x="20" y="32" width="11" height="3" fill="#512e29"/><path d="M6 42h36v6H6z" fill="#65ffea"/>
+  </symbol>
+  <symbol id="av7" viewBox="0 0 48 48">
+    <rect width="48" height="48" fill="#302709"/><rect x="11" y="10" width="27" height="30" fill="#bd7655"/>
+    <path d="M8 20l4-13 10-4 6 6 9-5 5 15-9-5-6 6-8-6-8 8z" fill="#4c2814"/><rect x="14" y="23" width="6" height="4" fill="#211609"/><rect x="29" y="23" width="6" height="4" fill="#211609"/><rect x="20" y="32" width="11" height="3" fill="#753626"/><path d="M6 42h36v6H6z" fill="#ffd74a"/>
+  </symbol>
+</defs>
+</svg>
