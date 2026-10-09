@@ -1783,3 +1783,25 @@ body{
   .arcade-game-scene .answer-card>b{position:relative;z-index:2}
   .arcade-game-scene .answer-card span b{position:relative;z-index:2}
 }
+
+
+
+/* =========================================================
+   CONCEPT-MATCH PORTRAIT + PANEL FINISH
+   ========================================================= */
+.arcade-player-avatar{
+  padding:0;
+  overflow:hidden;
+  background:#080b1c;
+}
+.avatar-svg{
+  display:block;
+  width:100%;
+  height:100%;
+  image-rendering:pixelated;
+}
+@media(min-width:981px){
+  .arcade-game-scene .answer-card{
+    clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px);
+  }
+}
