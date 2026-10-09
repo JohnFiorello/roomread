@@ -1942,3 +1942,27 @@ body{
   .lobby-how-row{grid-template-columns:1fr;width:95%}
   .lobby-how-card{min-height:72px}
 }
+
+
+
+/* Distressed logo art used in final concept-match build. */
+.battle-logo-img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:90px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 7px rgba(255,42,163,.18));
+}
+.home-logo-img{
+  width:min(610px,92%);
+  max-height:none;
+  margin:0 auto 4px;
+}
+@media(min-width:981px){
+  .battle-logo-wrap{padding-top:0}
+  .battle-logo-img{max-height:91px}
+}
+@media(max-width:620px){
+  .battle-logo-img{max-height:64px}
+}
