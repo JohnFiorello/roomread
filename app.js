@@ -277,33 +277,27 @@
     const roomUrl = location.origin + location.pathname + "?room=" + encodeURIComponent(ps.room);
     return '<main class="page arcade-page">'+
       '<section class="arcade-lobby-scene">'+
-        battleHeader(ps,'<span class="tag">'+(isHost?"HOST":"JOINED")+'</span>')+
-        '<div class="lobby-marquee">'+
-          '<div class="insert-copy">ROOM READY</div>'+
-          '<div class="room-code">'+esc(ps.room)+'</div>'+
-          '<div class="room-kicker">SHARE THIS CODE • '+players.length+' PLAYER'+(players.length===1?"":"S")+' CONNECTED</div>'+
-        '</div>'+
-        '<div class="lobby-cabinet">'+
-          '<section class="card lobby-player-card">'+
-            '<div class="cabinet-title"><span>PLAYERS</span><button class="ghost-btn" data-action="leave">LEAVE</button></div>'+
-            '<div class="player-list">'+players.map(p=>
-              '<div class="player-row"><div class="player-id"><div class="avatar">'+esc(p.name.charAt(0).toUpperCase())+'</div><div class="player-name">'+esc(p.name)+'</div></div>'+
-              (p.isHost?'<span class="tag">HOST</span>':(!p.connected?'<span class="tag warning">OFFLINE</span>':'<span class="tag">READY</span>'))+
-              '</div>'
-            ).join("")+'</div>'+
-            '<div class="copy-row"><button class="secondary-btn" data-action="copy-code">COPY CODE</button><button class="secondary-btn" data-action="copy-link" data-link="'+esc(roomUrl)+'">COPY INVITE LINK</button></div>'+
-          '</section>'+
-          '<section class="card lobby-rules-card">'+
-            '<div class="cabinet-title"><span>HOW TO WIN</span></div>'+
-            '<div class="explain-list">'+
-              '<div class="explain-item"><div class="explain-num">1</div><div><b>GET IT RIGHT</b><span>Right answer +1 point.</span></div></div>'+
-              '<div class="explain-item"><div class="explain-num">2</div><div><b>BE FIRST</b><span>Fastest right answer gets +2 more.</span></div></div>'+
-              '<div class="explain-item"><div class="explain-num">3</div><div><b>CALL A MISS</b><span>Solve early and predict a wrong answer someone else will choose.</span></div></div>'+
-            '</div>'+
-          '</section>'+
-        '</div>'+
-        '<div class="lobby-start">'+
-          (isHost?'<button class="primary-btn start-game-btn" data-action="start" '+(canStart?"":"disabled")+'>'+(canStart?"START GAME":"WAITING FOR 1 MORE PLAYER")+'</button>':'<div class="waiting-host">WAITING FOR HOST TO START…</div>')+
+        battleHeader(ps)+
+        '<section class="waiting-cabinet">'+
+          '<div class="waiting-room-code">ROOM <b>'+esc(ps.room)+'</b></div>'+
+          '<h1>WAITING FOR PLAYERS...</h1>'+
+          '<div class="waiting-dots"><span class="pixel-invader">▣</span>'+
+            Array.from({length:MAX_PLAYERS},(_,i)=>'<i class="'+(i<players.length?'on':'')+'"></i>').join("")+
+          '</div>'+
+          '<p>Share the room code with your friends to join!</p>'+
+          '<div class="waiting-actions">'+
+            '<button class="secondary-btn" data-action="copy-code">COPY CODE</button>'+
+            '<button class="secondary-btn" data-action="copy-link" data-link="'+esc(roomUrl)+'">COPY INVITE LINK</button>'+
+            '<button class="ghost-btn" data-action="leave">LEAVE</button>'+
+          '</div>'+
+          '<div class="lobby-start">'+
+            (isHost?'<button class="primary-btn start-game-btn" data-action="start" '+(canStart?"":"disabled")+'>'+(canStart?"START GAME":"WAITING FOR 1 MORE PLAYER")+'</button>':'<div class="waiting-host">WAITING FOR HOST TO START…</div>')+
+          '</div>'+
+        '</section>'+
+        '<div class="lobby-how-row">'+
+          '<div class="lobby-how-card pink"><span class="how-icon">👥</span><div><b>1. GET A CREW</b><small>2–8 players join with the room code.</small></div></div>'+
+          '<div class="lobby-how-card cyan"><span class="how-icon">🧠</span><div><b>2. SOLVE FAST</b><small>Answer the puzzle before time runs out.</small></div></div>'+
+          '<div class="lobby-how-card yellow"><span class="how-icon">🎯</span><div><b>3. CALL A MISS</b><small>Think someone will get it wrong? Call it.</small></div></div>'+
         '</div>'+
         (state.error?'<div class="error-box">'+esc(state.error)+'</div>':"")+
       '</section>'+
