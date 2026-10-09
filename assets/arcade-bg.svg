@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+<defs>
+<linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#07102d"/><stop offset=".55" stop-color="#2a0845"/><stop offset="1" stop-color="#050817"/></linearGradient>
+<radialGradient id="c" cx=".15" cy=".12" r=".45"><stop stop-color="#00d9ff" stop-opacity=".25"/><stop offset="1" stop-color="#00d9ff" stop-opacity="0"/></radialGradient>
+<radialGradient id="p" cx=".86" cy=".12" r=".45"><stop stop-color="#ff2aa3" stop-opacity=".28"/><stop offset="1" stop-color="#ff2aa3" stop-opacity="0"/></radialGradient>
+<pattern id="g" width="120" height="76" patternUnits="userSpaceOnUse"><path d="M120 0H0V76" fill="none" stroke="#7440b7" stroke-opacity=".18" stroke-width="2"/></pattern>
+</defs>
+<rect width="1600" height="900" fill="url(#s)"/><rect width="1600" height="900" fill="url(#c)"/><rect width="1600" height="900" fill="url(#p)"/>
+<circle cx="220" cy="190" r="82" fill="#fff0bd" opacity=".95"/><circle cx="195" cy="170" r="18" fill="#d5c596" opacity=".45"/><circle cx="250" cy="220" r="22" fill="#d5c596" opacity=".35"/>
+<g fill="#071020">
+<rect x="0" y="385" width="62" height="205"/><rect x="70" y="330" width="58" height="260"/><rect x="140" y="195" width="78" height="395"/><rect x="230" y="165" width="82" height="425"/>
+<rect x="326" y="360" width="72" height="230"/><rect x="410" y="250" width="50" height="340"/><rect x="475" y="330" width="58" height="260"/><rect x="550" y="360" width="70" height="230"/>
+<rect x="640" y="410" width="65" height="180"/><rect x="720" y="350" width="78" height="240"/><rect x="815" y="405" width="62" height="185"/><rect x="895" y="360" width="54" height="230"/>
+<rect x="970" y="395" width="70" height="195"/><rect x="1055" y="330" width="72" height="260"/><rect x="1140" y="285" width="88" height="305"/><rect x="1245" y="165" width="76" height="425"/>
+<rect x="1335" y="315" width="82" height="275"/><rect x="1430" y="230" width="68" height="360"/><rect x="1510" y="360" width="90" height="230"/>
+</g>
+<g fill="#00d9ff" opacity=".9">
+<rect x="157" y="230" width="7" height="12"/><rect x="178" y="270" width="7" height="12"/><rect x="251" y="215" width="7" height="12"/><rect x="273" y="310" width="7" height="12"/>
+<rect x="424" y="290" width="6" height="11"/><rect x="493" y="385" width="6" height="11"/><rect x="745" y="390" width="6" height="11"/><rect x="918" y="410" width="6" height="11"/>
+<rect x="1080" y="365" width="6" height="11"/><rect x="1264" y="240" width="7" height="12"/><rect x="1450" y="290" width="7" height="12"/>
+</g>
+<g fill="#ff2aa3" opacity=".88">
+<rect x="196" y="300" width="7" height="12"/><rect x="285" y="245" width="7" height="12"/><rect x="346" y="410" width="7" height="12"/><rect x="516" y="430" width="6" height="11"/>
+<rect x="675" y="450" width="6" height="11"/><rect x="770" y="420" width="6" height="11"/><rect x="1015" y="445" width="6" height="11"/><rect x="1188" y="340" width="6" height="11"/><rect x="1375" y="390" width="7" height="12"/>
+</g>
+<g fill="#ffe34e" opacity=".9">
+<rect x="90" y="390" width="7" height="12"/><rect x="262" y="355" width="7" height="12"/><rect x="442" y="345" width="6" height="11"/><rect x="590" y="430" width="6" height="11"/>
+<rect x="840" y="460" width="6" height="11"/><rect x="1110" y="390" width="6" height="11"/><rect x="1290" y="330" width="7" height="12"/><rect x="1468" y="355" width="7" height="12"/>
+</g>
+<path d="M0 520H1600" stroke="#ff2aa3" stroke-width="3" opacity=".8"/>
+<g fill="none" stroke="#00d9ff" stroke-width="2" opacity=".65"><path d="M0 520L60 468l60 52 60-52 60 52 60-52 60 52 60-52 60 52 60-52 60 52 60-52 60 52 60-52 60 52 60-52 60 52 60-52 60 52 60-52 60 52 60-52 60 52 60-52 60 52 60-52 60 52"/></g>
+<rect y="585" width="1600" height="315" fill="#050817"/><rect y="690" width="1600" height="210" fill="url(#g)"/>
+<g stroke="#26314d" stroke-width="2" opacity=".55">
+<path d="M-20 585L100 690M20 585l-120 105M60 585l120 105M100 585L-20 690M180 585l120 105M220 585L100 690M300 585l120 105M340 585L220 690M420 585l120 105M460 585L340 690M540 585l120 105M580 585L460 690M660 585l120 105M700 585L580 690M780 585l120 105M820 585L700 690M900 585l120 105M940 585L820 690M1020 585l120 105M1060 585L940 690M1140 585l120 105M1180 585l-120 105M1260 585l120 105M1300 585l-120 105M1380 585l120 105M1420 585l-120 105M1500 585l120 105M1540 585l-120 105"/>
+</g>
+<g fill="#091022" stroke-width="2"><rect x="55" y="742" width="190" height="96" stroke="#ff2aa3"/><rect x="1245" y="752" width="215" height="102" stroke="#00d9ff"/><rect x="1465" y="690" width="105" height="132" stroke="#9a63ff"/></g>
+<g stroke-width="2" opacity=".5"><path d="M55 742l190 96M245 742L55 838" stroke="#00d9ff"/><path d="M1245 752l215 102M1460 752l-215 102" stroke="#ff2aa3"/></g>
+</svg>
