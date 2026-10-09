@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - "app.js"
+      - "index.html"
       - "styles.css"
       - "assets/arcade-bg.svg"
       - ".github/workflows/visual-review.yml"
