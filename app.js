@@ -184,9 +184,9 @@
   }
 
   function topbar(extra=""){
-    return '<div class="topbar arcade-topbar">'+
-      '<div class="brand arcade-logo"><span class="brand-mark">M</span><div>MISSPICK<span class="brand-sub">SOLVE FAST • CALL THE MISS</span></div></div>'+
-      '<div class="top-actions">'+extra+'<button class="ghost-btn" data-action="rules">HOW TO PLAY</button></div>'+
+    return '<div class="arcade-utility">'+
+      '<div class="mini-logo"><span class="mini-logo-mark">M</span><span>MISSPICK</span></div>'+
+      '<div class="utility-actions">'+extra+'<button class="ghost-btn" data-action="rules">HOW TO PLAY</button></div>'+
     '</div>';
   }
 
@@ -202,6 +202,14 @@
         '</div>'
       ).join("")+
     '</section>';
+  }
+
+  function battleHeader(ps,extra=""){
+    return '<header class="battle-header">'+
+      topbar(extra)+
+      '<div class="battle-logo-wrap"><div class="battle-logo">MISSPICK</div><div class="battle-tagline">SOLVE FAST • CALL THE MISS</div></div>'+
+      arcadePlayerStrip(ps)+
+    '</header>';
   }
 
   function rulesModal(){
@@ -223,36 +231,33 @@
 
   function homeView(){
     const prefill = new URLSearchParams(location.search).get("room") || "";
-    return '<main class="page">'+
-      topbar()+
-      '<section class="hero">'+
-        '<div class="hero-card">'+
+    return '<main class="page arcade-page">'+
+      '<section class="arcade-home-scene">'+
+        topbar()+
+        '<div class="home-marquee">'+
+          '<div class="battle-logo home-logo">MISSPICK</div>'+
+          '<div class="battle-tagline">SOLVE FAST • CALL THE MISS</div>'+
           '<div class="eyebrow">LIVE MULTIPLAYER • 2–8 PLAYERS</div>'+
-          '<h1>Solve it.<br><span class="gradient-text">Call their mistake.</span></h1>'+
-          '<p class="lead">Everybody solves the same tiny puzzle. Get it right early, then predict the wrong answer someone else will choose.</p>'+
+          '<h1 class="home-headline">Beat the puzzle.<br><span>Call their mistake.</span></h1>'+
+          '<p class="lead home-lead">Everyone sees the same quick challenge. Get it right early, then predict the wrong answer somebody else will choose.</p>'+
           '<div class="hero-actions">'+
-            '<button class="primary-btn" data-action="host" '+(state.joining?"disabled":"")+'>'+(state.joining?"Creating room…":"Create a room")+'</button>'+
-            '<button class="secondary-btn" data-action="focus-join" '+(state.joining?"disabled":"")+'>Join a room</button>'+
-          '</div>'+
-          '<div class="rule-strip">'+
-            '<div class="rule-chip"><b>1. THINK</b><span>One puzzle. Four answers. Beat the clock.</span></div>'+
-            '<div class="rule-chip"><b>2. CALL IT</b><span>Correct early? Predict a tempting wrong answer.</span></div>'+
-            '<div class="rule-chip"><b>3. REVEAL</b><span>Find out who you read perfectly—and who got caught guessing.</span></div>'+
+            '<button class="primary-btn big-arcade-btn" data-action="host" '+(state.joining?"disabled":"")+'>'+(state.joining?"CREATING ROOM…":"CREATE A ROOM")+'</button>'+
+            '<button class="secondary-btn big-arcade-btn" data-action="focus-join" '+(state.joining?"disabled":"")+'>JOIN A ROOM</button>'+
           '</div>'+
         '</div>'+
-        '<div class="side-stack">'+
-          '<div class="mini-card"><strong>🧠 Feel smart</strong><p>Patterns, logic, wordplay and compact brain teasers—not obscure trivia.</p></div>'+
-          '<div class="mini-card"><strong>⏱️ 8 quick rounds</strong><p>About four minutes. The last round gets brutally short.</p></div>'+
-          '<div class="mini-card"><strong>🎯 Call the miss</strong><p>Correct predictions earn you points—and cost opponents one.</p></div>'+
+        '<div class="home-rule-row">'+
+          '<div class="rule-chip"><b>1 • SOLVE</b><span>One puzzle. Four answers. Beat the clock.</span></div>'+
+          '<div class="rule-chip"><b>2 • CALL IT</b><span>Get it right early? Predict a tempting wrong answer.</span></div>'+
+          '<div class="rule-chip"><b>3 • REVEAL</b><span>Score the solve, then see who walked into the miss you called.</span></div>'+
         '</div>'+
+        '<section class="card join-panel arcade-join-panel" id="join-panel">'+
+          '<div class="field"><label for="name">PLAYER NAME</label><input id="name" maxlength="18" autocomplete="nickname" placeholder="e.g. Alex"></div>'+
+          '<div class="field"><label for="room">ROOM CODE</label><input id="room" class="code-input" maxlength="6" placeholder="ABC123" value="'+esc(prefill)+'"></div>'+
+          '<button class="secondary-btn" data-action="join" '+(state.joining?"disabled":"")+'>'+(state.joining?"CONNECTING…":"JOIN ROOM")+'</button>'+
+        '</section>'+
+        (state.error?'<div class="error-box">'+esc(state.error)+'</div>':"")+
+        '<div class="arcade-footnote">NO LOGIN • NO INSTALL • KEEP THE HOST TAB OPEN</div>'+
       '</section>'+
-      '<section class="card join-panel" id="join-panel">'+
-        '<div class="field"><label for="name">Your name</label><input id="name" maxlength="18" autocomplete="nickname" placeholder="e.g. Alex"></div>'+
-        '<div class="field"><label for="room">Room code</label><input id="room" class="code-input" maxlength="6" placeholder="ABC123" value="'+esc(prefill)+'"></div>'+
-        '<button class="secondary-btn" data-action="join" '+(state.joining?"disabled":"")+'>'+(state.joining?"Connecting…":"Join room")+'</button>'+
-      '</section>'+
-      (state.error?'<div class="error-box">'+esc(state.error)+'</div>':"")+
-      '<div class="notice">No login. No install. Keep the host tab open while the room is playing.</div>'+
       rulesModal()+
     '</main>';
   }
@@ -262,31 +267,38 @@
     const players = ps.players || [];
     const canStart = isHost && players.length >= 2;
     const roomUrl = location.origin + location.pathname + "?room=" + encodeURIComponent(ps.room);
-    return '<main class="page">'+
-      topbar('<span class="tag">'+(isHost?"HOST":"JOINED")+'</span>')+
-      arcadePlayerStrip(ps)+
-      '<div class="room-head"><div><div class="room-kicker">Room code</div><div class="room-code">'+esc(ps.room)+'</div></div><button class="ghost-btn" data-action="leave">Leave</button></div>'+
-      '<section class="lobby-grid">'+
-        '<div class="card">'+
-          '<h2>'+players.length+' player'+(players.length===1?"":"s")+' ready</h2>'+
-          '<div class="player-list">'+players.map(p=>
-            '<div class="player-row"><div class="player-id"><div class="avatar">'+esc(p.name.charAt(0).toUpperCase())+'</div><div class="player-name">'+esc(p.name)+'</div></div>'+
-            (p.isHost?'<span class="tag">host</span>':(!p.connected?'<span class="tag warning">offline</span>':""))+
-            '</div>'
-          ).join("")+'</div>'+
-          '<div class="copy-row"><button class="secondary-btn" data-action="copy-code">Copy code</button><button class="secondary-btn" data-action="copy-link" data-link="'+esc(roomUrl)+'">Copy invite link</button></div>'+
-          (isHost?'<div style="margin-top:20px"><button class="primary-btn" data-action="start" '+(canStart?"":"disabled")+'>'+(canStart?"Start game":"Waiting for 1 more player")+'</button></div>':'<p class="notice">The host starts the game when everybody is in.</p>')+
+    return '<main class="page arcade-page">'+
+      '<section class="arcade-lobby-scene">'+
+        battleHeader(ps,'<span class="tag">'+(isHost?"HOST":"JOINED")+'</span>')+
+        '<div class="lobby-marquee">'+
+          '<div class="insert-copy">ROOM READY</div>'+
+          '<div class="room-code">'+esc(ps.room)+'</div>'+
+          '<div class="room-kicker">SHARE THIS CODE • '+players.length+' PLAYER'+(players.length===1?"":"S")+' CONNECTED</div>'+
         '</div>'+
-        '<div class="card">'+
-          '<h3>You only need to know this</h3>'+
-          '<div class="explain-list">'+
-            '<div class="explain-item"><div class="explain-num">1</div><div><b>Tap the correct answer fast.</b><span>Right answer: +1 point. Fastest right answer: +2 bonus points.</span></div></div>'+
-            '<div class="explain-item"><div class="explain-num">2</div><div><b>If you get it right early, call a miss.</b><span>Guess which wrong answer somebody else will pick.</span></div></div>'+
-            '<div class="explain-item"><div class="explain-num">3</div><div><b>Find out who called it.</b><span>Get +1 per correct prediction (up to +2). That player loses 1 point.</span></div></div>'+
-          '</div>'+
+        '<div class="lobby-cabinet">'+
+          '<section class="card lobby-player-card">'+
+            '<div class="cabinet-title"><span>PLAYERS</span><button class="ghost-btn" data-action="leave">LEAVE</button></div>'+
+            '<div class="player-list">'+players.map(p=>
+              '<div class="player-row"><div class="player-id"><div class="avatar">'+esc(p.name.charAt(0).toUpperCase())+'</div><div class="player-name">'+esc(p.name)+'</div></div>'+
+              (p.isHost?'<span class="tag">HOST</span>':(!p.connected?'<span class="tag warning">OFFLINE</span>':'<span class="tag">READY</span>'))+
+              '</div>'
+            ).join("")+'</div>'+
+            '<div class="copy-row"><button class="secondary-btn" data-action="copy-code">COPY CODE</button><button class="secondary-btn" data-action="copy-link" data-link="'+esc(roomUrl)+'">COPY INVITE LINK</button></div>'+
+          '</section>'+
+          '<section class="card lobby-rules-card">'+
+            '<div class="cabinet-title"><span>HOW TO WIN</span></div>'+
+            '<div class="explain-list">'+
+              '<div class="explain-item"><div class="explain-num">1</div><div><b>GET IT RIGHT</b><span>Right answer +1 point.</span></div></div>'+
+              '<div class="explain-item"><div class="explain-num">2</div><div><b>BE FIRST</b><span>Fastest right answer gets +2 more.</span></div></div>'+
+              '<div class="explain-item"><div class="explain-num">3</div><div><b>CALL A MISS</b><span>Solve early and predict a wrong answer someone else will choose.</span></div></div>'+
+            '</div>'+
+          '</section>'+
         '</div>'+
+        '<div class="lobby-start">'+
+          (isHost?'<button class="primary-btn start-game-btn" data-action="start" '+(canStart?"":"disabled")+'>'+(canStart?"START GAME":"WAITING FOR 1 MORE PLAYER")+'</button>':'<div class="waiting-host">WAITING FOR HOST TO START…</div>')+
+        '</div>'+
+        (state.error?'<div class="error-box">'+esc(state.error)+'</div>':"")+
       '</section>'+
-      (state.error?'<div class="error-box">'+esc(state.error)+'</div>':"")+
       rulesModal()+
     '</main>';
   }
@@ -300,43 +312,61 @@
     const lateCorrect = correct && !me.answer.trapEligible;
     const lightning = g.round === TOTAL_ROUNDS-1;
 
-    let taskHtml = "";
+    let centerHtml = "";
+    let missHtml = "";
+
     if(!answered){
-      taskHtml =
-        '<div class="instruction"><b>Find the right answer.</b><span>Right answer +1 • Fastest right answer +2 extra</span></div>'+
+      centerHtml =
+        '<div class="instruction score-callout"><b>RIGHT ANSWER <strong>+1</strong></b><span>FASTEST RIGHT ANSWER <strong>+2</strong></span></div>'+
         answerGrid(g.puzzle,me);
+      missHtml =
+        '<div class="miss-panel-idle"><div class="miss-burst">🎯</div><p>GET IT RIGHT EARLY TO UNLOCK</p><strong>CALL A MISS</strong><span>Predict the wrong answer somebody else will choose.</span></div>';
     }else if(trapOpen){
-      taskHtml =
-        '<div class="success-banner"><div class="success-icon">✓</div><div><b>RIGHT! NOW CALL A MISS.</b><span>Which WRONG answer do you predict someone else picked?</span></div></div>'+
-        '<div class="trap-grid">'+g.puzzle.options.map((opt,i)=>{
-          if(i===me.answer.choice) return '<div class="answer-card correct-locked"><span class="answer-letter">'+String.fromCharCode(65+i)+'</span><span><b>'+esc(opt)+'</b><small>Your correct answer</small></span></div>';
-          return '<button class="answer-card trap-btn" data-action="trap" data-choice="'+i+'"><span class="answer-letter">🎯</span><span><b>'+esc(opt)+'</b><small>Predict this wrong answer</small></span></button>';
+      centerHtml =
+        '<div class="success-banner"><div class="success-icon">✓</div><div><b>RIGHT ANSWER!</b><span>Now read the room.</span></div></div>'+
+        answerGrid(g.puzzle,me,true);
+      missHtml =
+        '<div class="miss-panel-live"><div class="miss-panel-title">CALL A MISS</div><p>Which WRONG answer do you predict somebody else picked?</p>'+
+        '<div class="miss-choice-grid">'+g.puzzle.options.map((opt,i)=>{
+          if(i===me.answer.choice) return '';
+          return '<button class="miss-choice trap-btn" data-action="trap" data-choice="'+i+'"><span>'+String.fromCharCode(65+i)+'</span>'+esc(opt)+'</button>';
         }).join("")+'</div>'+
-        '<div class="trap-clock">Prediction window: <b id="trap-time">—</b></div>';
+        '<div class="trap-clock">LOCK IT IN • <b id="trap-time">—</b></div></div>';
     }else if(correct){
-      taskHtml =
-        '<div class="success-banner"><div class="success-icon">✓</div><div><b>CORRECT.</b><span>'+(lateCorrect?"Correct! You were too late to make a prediction.":"Prediction locked. Let's see who chose it.")+'</span></div></div>'+
+      centerHtml =
+        '<div class="success-banner"><div class="success-icon">✓</div><div><b>CORRECT.</b><span>'+(lateCorrect?"Too late to Call a Miss this round.":"Your Call a Miss prediction is locked.")+'</span></div></div>'+
         answerGrid(g.puzzle,me,true);
+      missHtml = '<div class="miss-panel-idle locked"><div class="miss-burst">✓</div><strong>'+(lateCorrect?"NO CALL THIS ROUND":"MISS CALLED")+'</strong><span>'+(lateCorrect?"You solved it after the prediction window closed.":"Prediction locked. Reveal incoming.")+'</span></div>';
     }else{
-      taskHtml =
-        '<div class="wrong-banner"><div class="wrong-icon">×</div><div><b>LOCKED.</b><span>That answer was wrong. The correct answer stays hidden until the reveal.</span></div></div>'+
+      centerHtml =
+        '<div class="wrong-banner"><div class="wrong-icon">×</div><div><b>ANSWER LOCKED.</b><span>The right answer stays hidden until the reveal.</span></div></div>'+
         answerGrid(g.puzzle,me,true);
+      missHtml = '<div class="miss-panel-idle locked"><div class="miss-burst">×</div><strong>NO CALL THIS ROUND</strong><span>Call a Miss only unlocks after a correct early answer.</span></div>';
     }
 
-    return '<main class="page"><div class="game-wrap">'+
-      topbar('<span class="tag">'+esc(ps.room)+'</span>')+
-      arcadePlayerStrip(ps)+
-      '<div class="round-head"><div><span class="round-label">'+(lightning?"⚡ LIGHTNING ROUND":"ROUND "+(g.round+1)+" OF "+TOTAL_ROUNDS)+'</span><span class="difficulty">'+esc(g.tier.toUpperCase())+'</span></div><div class="timer-wrap"><div id="timer-num" class="timer-num">—</div><span>seconds</span></div></div>'+
-      '<div class="timer-track"><div id="timer-fill" class="timer-fill"></div></div>'+
-      '<section class="card puzzle-card">'+
-        '<div id="ready-banner" class="ready-banner">GET READY</div>'+
-        '<h2 class="puzzle-question">'+esc(g.puzzle.q)+'</h2>'+
-        taskHtml+
+    return '<main class="page arcade-page">'+
+      '<section class="arcade-game-scene">'+
+        battleHeader(ps,'<span class="tag">'+esc(ps.room)+'</span>')+
+        '<div class="arena-layout">'+
+          '<section class="question-stage">'+
+            '<div class="round-chrome"><span>'+(lightning?"⚡ LIGHTNING ROUND":"ROUND "+(g.round+1)+" / "+TOTAL_ROUNDS)+'</span><div class="timer-hex"><small>TIME</small><strong id="timer-num">—</strong></div><span>'+esc(g.tier.toUpperCase())+' CHALLENGE</span></div>'+
+            '<div class="timer-track"><div id="timer-fill" class="timer-fill"></div></div>'+
+            '<section class="puzzle-panel">'+
+              '<div id="ready-banner" class="ready-banner">GET READY</div>'+
+              '<h2 class="puzzle-question">'+esc(g.puzzle.q)+'</h2>'+
+            '</section>'+
+            '<div class="answer-zone">'+centerHtml+'</div>'+
+          '</section>'+
+          '<aside class="call-miss-panel">'+
+            '<div class="call-miss-logo">CALL A<br><span>MISS</span></div>'+
+            missHtml+
+          '</aside>'+
+        '</div>'+
+        '<section class="status-ticker"><span>'+statusTitle(me)+'</span><span>'+g.status.answered+' / '+ps.players.length+' ANSWERS LOCKED</span><span>'+g.status.traps+' MISS CALL'+(g.status.traps===1?"":"S")+'</span></section>'+
+        (state.error?'<div class="error-box">'+esc(state.error)+'</div>':"")+
       '</section>'+
-      '<section class="card status-card"><div><b>'+statusTitle(me)+'</b><div class="status-text">'+g.status.answered+' of '+ps.players.length+' answers locked • '+g.status.traps+' prediction'+(g.status.traps===1?"":"s")+' locked</div></div><div class="dots">'+Array.from({length:ps.players.length},(_,i)=>'<span class="dot '+(i<g.status.answered?"done":"")+'"></span>').join("")+'</div></section>'+
-      (state.error?'<div class="error-box">'+esc(state.error)+'</div>':"")+
       rulesModal()+
-    '</div></main>';
+    '</main>';
   }
 
   function statusTitle(me){
@@ -371,37 +401,34 @@
     const fastest = r.players.find(p=>p.id===r.fastestId);
     const mineDelta = mine ? mine.delta : 0;
 
-    return '<main class="page"><div class="game-wrap">'+
-      topbar('<span class="tag">'+esc(ps.room)+'</span>')+
-      arcadePlayerStrip(ps)+
-      '<div class="reveal-title">'+(mine && mine.correct ? (mine.id===r.fastestId?"Fastest brain in the room.":"You got it.") : "Answer revealed.")+'</div>'+
-      '<p class="reveal-sub">'+(mineDelta>=0?"+":"")+mineDelta+' this round • '+esc(r.explain)+'</p>'+
-      '<section class="card reveal-card">'+
-        '<div class="correct-answer"><span>✓</span><div><small>CORRECT ANSWER</small><b>'+String.fromCharCode(65+r.correct)+'. '+esc(correctOpt)+'</b></div></div>'+
-        (fastest?'<div class="fastest-strip">⚡ <b>'+esc(fastest.name)+'</b> was fastest at <b>'+formatTime(fastest.answerMs)+'</b> and earned the +2 speed bonus.</div>':'<div class="fastest-strip">Nobody solved it in time.</div>')+
-        '<div class="answer-reveal-grid">'+g.puzzle.options.map((opt,i)=>{
-          const pickers = r.players.filter(p=>p.choice===i);
-          const traps = r.players.filter(p=>p.trap===i);
-          return '<div class="reveal-option '+(i===r.correct?"is-correct":"")+'">'+
-            '<div class="reveal-option-head"><span class="answer-letter">'+String.fromCharCode(65+i)+'</span><b>'+esc(opt)+'</b>'+(traps.length?'<span class="trap-marker">🎯 '+traps.length+'</span>':"")+'</div>'+
-            '<div class="picker-row">'+(pickers.length?pickers.map(p=>'<span class="person-chip '+(p.trapped?"caught":"")+'">'+esc(p.name)+(p.trapped?" 💥":"")+'</span>').join(""):'<span class="small">Nobody chose this</span>')+'</div>'+
-          '</div>';
-        }).join("")+'</div>'+
-        '<div class="round-results">'+r.players.map(p=>
-          '<div class="round-player '+(p.id===state.meId?"mine":"")+'">'+
-            '<div><b>'+esc(p.name)+'</b><small>'+resultSummary(p)+'</small></div>'+
-            '<div class="delta '+(p.delta<0?"negative":"")+'">'+(p.delta>=0?"+":"")+p.delta+'</div>'+
-          '</div>'
-        ).join("")+'</div>'+
-      '</section>'+
-      leaderboard(ps)+
-      '<section class="card ready-card">'+
-        '<div class="ready-head"><div><h3>Ready for '+(lastRound?"the results?":"the next puzzle?")+'</h3><p>Take a moment to see what everyone picked. The game continues when <b>everyone</b> says they are ready.</p></div><span class="tag">'+readyCount+' / '+allCount+' READY</span></div>'+
-        '<div class="ready-roster">'+readyPlayers.map(p=>'<span class="ready-person '+(p.ready?"ready":"")+'">'+(p.ready?"✓ ":"○ ")+esc(p.name)+(p.connected?"":" (offline)")+'</span>').join("")+'</div>'+
-        '<div class="actions-center">'+(iAmReady?'<span class="small">✓ You’re ready. Waiting for the rest of the room…</span>':'<button class="primary-btn" data-action="ready">I’m ready '+(lastRound?"for final results":"for the next round")+'</button>')+'</div>'+
+    return '<main class="page arcade-page">'+
+      '<section class="arcade-results-scene">'+
+        battleHeader(ps,'<span class="tag">'+esc(ps.room)+'</span>')+
+        '<div class="results-marquee"><span>'+(mine && mine.correct ? (mine.id===r.fastestId?"FASTEST BRAIN IN THE ROOM!":"NICE READ!") : "ROUND REVEAL")+'</span><b>'+(mineDelta>=0?"+":"")+mineDelta+' THIS ROUND</b></div>'+
+        '<section class="results-board">'+
+          '<div class="correct-answer"><span>✓</span><div><small>CORRECT ANSWER</small><b>'+String.fromCharCode(65+r.correct)+'. '+esc(correctOpt)+'</b><small>'+esc(r.explain)+'</small></div></div>'+
+          (fastest?'<div class="fastest-strip">⚡ <b>'+esc(fastest.name)+'</b> was fastest at <b>'+formatTime(fastest.answerMs)+'</b> • +2 SPEED BONUS</div>':'<div class="fastest-strip">Nobody solved it in time.</div>')+
+          '<div class="answer-reveal-grid">'+g.puzzle.options.map((opt,i)=>{
+            const pickers = r.players.filter(p=>p.choice===i);
+            const traps = r.players.filter(p=>p.trap===i);
+            return '<div class="reveal-option '+(i===r.correct?"is-correct":"")+'">'+
+              '<div class="reveal-option-head"><span class="answer-letter">'+String.fromCharCode(65+i)+'</span><b>'+esc(opt)+'</b>'+(traps.length?'<span class="trap-marker">🎯 '+traps.length+'</span>':"")+'</div>'+
+              '<div class="picker-row">'+(pickers.length?pickers.map(p=>'<span class="person-chip '+(p.trapped?"caught":"")+'">'+esc(p.name)+(p.trapped?" 💥":"")+'</span>').join(""):'<span class="small">Nobody chose this</span>')+'</div>'+
+            '</div>';
+          }).join("")+'</div>'+
+          '<div class="round-results">'+r.players.map(p=>
+            '<div class="round-player '+(p.id===state.meId?"mine":"")+'"><div><b>'+esc(p.name)+'</b><small>'+resultSummary(p)+'</small></div><div class="delta '+(p.delta<0?"negative":"")+'">'+(p.delta>=0?"+":"")+p.delta+'</div></div>'
+          ).join("")+'</div>'+
+        '</section>'+
+        leaderboard(ps)+
+        '<section class="ready-card arcade-ready-card">'+
+          '<div class="ready-head"><div><h3>READY FOR '+(lastRound?"THE FINAL SCORE?":"THE NEXT PUZZLE?")+'</h3><p>The game continues when everyone is ready.</p></div><span class="tag">'+readyCount+' / '+allCount+' READY</span></div>'+
+          '<div class="ready-roster">'+readyPlayers.map(p=>'<span class="ready-person '+(p.ready?"ready":"")+'">'+(p.ready?"✓ ":"○ ")+esc(p.name)+(p.connected?"":" (offline)")+'</span>').join("")+'</div>'+
+          '<div class="actions-center">'+(iAmReady?'<span class="small">✓ YOU’RE READY • WAITING FOR THE ROOM…</span>':'<button class="primary-btn" data-action="ready">I’M READY '+(lastRound?"FOR FINAL RESULTS":"FOR THE NEXT ROUND")+'</button>')+'</div>'+
+        '</section>'+
       '</section>'+
       rulesModal()+
-    '</div></main>';
+    '</main>';
   }
 
   function resultSummary(p){
@@ -417,8 +444,8 @@
 
   function leaderboard(ps){
     const sorted=[...ps.players].sort((a,b)=>b.score-a.score || a.name.localeCompare(b.name));
-    return '<section class="card leaderboard-card"><div class="leader-head"><h3>Leaderboard</h3><span class="small">after round '+Math.min(TOTAL_ROUNDS,(ps.game.round||0)+1)+'</span></div><div class="leaderboard">'+sorted.map((p,i)=>
-      '<div class="leader-row '+(p.id===state.meId?"me-row":"")+'"><div class="rank">'+(i+1)+'</div><div><b>'+esc(p.name)+'</b>'+(p.id===state.meId?' <span class="small">(you)</span>':"")+'</div><div class="score">'+p.score+'</div></div>'
+    return '<section class="leaderboard-card arcade-board"><div class="leader-head"><h3>LEADERBOARD</h3><span class="small">AFTER ROUND '+Math.min(TOTAL_ROUNDS,(ps.game.round||0)+1)+'</span></div><div class="leaderboard">'+sorted.map((p,i)=>
+      '<div class="leader-row '+(p.id===state.meId?"me-row":"")+'"><div class="rank">'+(i+1)+'</div><div><b>'+esc(p.name)+'</b>'+(p.id===state.meId?' <span class="small">(YOU)</span>':"")+'</div><div class="score">'+p.score+'</div></div>'
     ).join("")+'</div></section>';
   }
 
@@ -431,24 +458,25 @@
     const trapKing=[...sorted].sort((a,b)=>b.trapHits-a.trapHits || b.score-a.score)[0];
     const speedKing=[...sorted].sort((a,b)=>b.fastestWins-a.fastestWins || b.score-a.score)[0];
 
-    return '<main class="page"><div class="game-wrap">'+
-      topbar('<span class="tag">FINAL</span>')+
-      arcadePlayerStrip(ps)+
-      '<section class="card final-hero">'+
-        '<div class="trophy">🧠🎯</div>'+
-        '<h1>'+(winners.length>1?"Dead heat.":esc(winners[0].name)+" wins MISSPICK.")+'</h1>'+
-        '<p class="lead final-lead">'+(winners.length>1?esc(winners.map(p=>p.name).join(" and "))+" tied at "+top+" points.":esc(winners[0].name)+" finished with "+top+" points.")+'</p>'+
-        '<div class="stat-ribbon">'+
-          '<div class="stat-box"><strong>#'+meRank+'</strong><span>Your finish</span></div>'+
-          '<div class="stat-box"><strong>'+me.score+'</strong><span>Your score</span></div>'+
-          '<div class="stat-box"><strong>'+me.trapHits+'</strong><span>Misses you called</span></div>'+
-        '</div>'+
-        '<div class="award-row"><span>⚡ Speed demon: <b>'+esc(speedKing?.name||"—")+'</b> ('+(speedKing?.fastestWins||0)+')</span><span>🎯 Sharpest Predictor: <b>'+esc(trapKing?.name||"—")+'</b> ('+(trapKing?.trapHits||0)+')</span></div>'+
+    return '<main class="page arcade-page">'+
+      '<section class="arcade-final-scene">'+
+        battleHeader(ps,'<span class="tag">FINAL</span>')+
+        '<section class="final-hero arcade-final-board">'+
+          '<div class="final-kicker">GAME OVER</div>'+
+          '<h1>'+(winners.length>1?"DEAD HEAT!":esc(winners[0].name)+" WINS!")+'</h1>'+
+          '<p class="lead final-lead">'+(winners.length>1?esc(winners.map(p=>p.name).join(" and "))+" tied at "+top+" points.":esc(winners[0].name)+" finished with "+top+" points.")+'</p>'+
+          '<div class="stat-ribbon">'+
+            '<div class="stat-box"><strong>#'+meRank+'</strong><span>YOUR FINISH</span></div>'+
+            '<div class="stat-box"><strong>'+me.score+'</strong><span>YOUR SCORE</span></div>'+
+            '<div class="stat-box"><strong>'+me.trapHits+'</strong><span>MISSES YOU CALLED</span></div>'+
+          '</div>'+
+          '<div class="award-row"><span>⚡ SPEED DEMON: <b>'+esc(speedKing?.name||"—")+'</b> ('+(speedKing?.fastestWins||0)+')</span><span>🎯 SHARPEST PREDICTOR: <b>'+esc(trapKing?.name||"—")+'</b> ('+(trapKing?.trapHits||0)+')</span></div>'+
+        '</section>'+
+        leaderboard(ps)+
+        '<div class="actions-center final-actions">'+(state.mode==="host"?'<button class="primary-btn" data-action="rematch">PLAY AGAIN</button>':"")+'<button class="secondary-btn" data-action="leave">LEAVE ROOM</button></div>'+
       '</section>'+
-      leaderboard(ps)+
-      '<div class="actions-center">'+(state.mode==="host"?'<button class="primary-btn" data-action="rematch">Play again</button>':"")+'<button class="secondary-btn" data-action="leave">Leave room</button></div>'+
       rulesModal()+
-    '</div></main>';
+    '</main>';
   }
 
   function render(){
