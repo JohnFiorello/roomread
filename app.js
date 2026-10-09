@@ -212,7 +212,6 @@
     const left=players.slice(0,cut);
     const right=players.slice(cut);
     return '<header class="battle-header">'+
-      '<div class="battle-meta">'+extra+'<button class="ghost-btn" data-action="rules">HOW TO PLAY</button></div>'+
       '<div class="battle-roster">'+
         '<div class="roster-half roster-left">'+left.map((p,i)=>arcadePlayerCard(p,i)).join("")+'</div>'+
         '<div class="battle-logo-wrap"><div class="battle-logo">MISSPICK</div><div class="battle-tagline">SOLVE FAST • CALL THE MISS</div></div>'+
