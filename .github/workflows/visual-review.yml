@@ -1,0 +1,42 @@
+name: Visual Review Screens
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "app.js"
+      - "styles.css"
+      - "assets/arcade-bg.svg"
+      - ".github/workflows/visual-review.yml"
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Wait for GitHub Pages update
+        run: |
+          for i in {1..24}; do
+            if curl -fsSL "https://johnfiorello.github.io/roomread/?preview=question&v=${GITHUB_SHA}" | grep -q "MISSPICK"; then
+              echo "Site is reachable"
+              sleep 8
+              break
+            fi
+            sleep 5
+          done
+
+      - name: Capture real live screens
+        run: |
+          CHROME="$(command -v google-chrome-stable || command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME"
+          "$CHROME" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1600,900 --force-device-scale-factor=1 --virtual-time-budget=3500 --screenshot=misspick-loading.png "https://johnfiorello.github.io/roomread/?v=${GITHUB_SHA}"
+          "$CHROME" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=1600,900 --force-device-scale-factor=1 --virtual-time-budget=2500 --screenshot=misspick-question.png "https://johnfiorello.github.io/roomread/?preview=question&v=${GITHUB_SHA}"
+
+      - name: Upload review screens
+        uses: actions/upload-artifact@v4
+        with:
+          name: misspick-visual-review
+          path: |
+            misspick-loading.png
+            misspick-question.png
