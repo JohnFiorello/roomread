@@ -151,3 +151,469 @@ h1{font-size:clamp(46px,8vw,86px);line-height:.9;letter-spacing:-.058em;margin:1
 .ready-person.ready{border-color:rgba(217,255,87,.4);color:var(--lime);background:rgba(217,255,87,.06)}
 .ready-card .actions-center{margin-top:18px}
 @media(max-width:480px){.ready-head{flex-direction:column;gap:10px}.ready-card{padding:18px}}
+
+
+/* =========================================================
+   MISSPICK ARCADE RESKIN — neon trivia cabinet, not combat HUD
+   ========================================================= */
+:root{
+  --arcade-night:#07091d;
+  --arcade-panel:#090d20;
+  --arcade-panel2:#101631;
+  --arcade-pink:#ff2aa3;
+  --arcade-blue:#00d9ff;
+  --arcade-yellow:#ffe34e;
+  --arcade-green:#32f59a;
+  --arcade-orange:#ff8a22;
+  --arcade-purple:#9a63ff;
+  --arcade-red:#ff3d55;
+  --arcade-cream:#fff6cf;
+  --arcade-ink:#f9fbff;
+  --arcade-muted:#a9b8dc;
+}
+
+html{background:var(--arcade-night)}
+body{
+  min-height:100vh;
+  color:var(--arcade-ink);
+  background:
+    radial-gradient(circle at 16% 12%,rgba(0,217,255,.18),transparent 22rem),
+    radial-gradient(circle at 84% 10%,rgba(255,42,163,.18),transparent 25rem),
+    linear-gradient(180deg,#080b2b 0%,#111050 33%,#180938 56%,#080918 100%);
+  font-family:"Trebuchet MS","Arial Narrow",Arial,sans-serif;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:999;
+  opacity:.12;
+  background:repeating-linear-gradient(
+    180deg,
+    rgba(255,255,255,.12) 0,
+    rgba(255,255,255,.12) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mix-blend-mode:overlay;
+}
+body::after{
+  content:"";
+  position:fixed;
+  left:-15vw;
+  right:-15vw;
+  bottom:-24vh;
+  height:48vh;
+  pointer-events:none;
+  opacity:.28;
+  z-index:-1;
+  transform:perspective(420px) rotateX(58deg);
+  transform-origin:50% 100%;
+  background:
+    linear-gradient(rgba(0,217,255,.3) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,42,163,.32) 1px,transparent 1px);
+  background-size:52px 38px;
+  filter:drop-shadow(0 0 10px rgba(0,217,255,.3));
+}
+.app-shell{position:relative;z-index:1}
+.page{width:min(1200px,100%);padding-top:18px}
+
+.arcade-topbar{
+  position:relative;
+  min-height:72px;
+  padding:8px 12px 9px;
+  margin-bottom:14px;
+  background:linear-gradient(180deg,rgba(6,8,29,.9),rgba(13,12,48,.86));
+  border-top:2px solid var(--arcade-blue);
+  border-bottom:2px solid var(--arcade-pink);
+  box-shadow:0 0 24px rgba(0,217,255,.17),0 0 32px rgba(255,42,163,.11);
+}
+.arcade-topbar::before,
+.arcade-topbar::after{
+  content:"";
+  position:absolute;
+  width:70px;height:5px;bottom:-3px;
+  background:var(--arcade-yellow);
+  box-shadow:0 0 10px var(--arcade-yellow);
+}
+.arcade-topbar::before{left:8%}
+.arcade-topbar::after{right:8%}
+
+.arcade-logo{
+  gap:12px;
+  letter-spacing:.035em;
+  font-family:Impact,"Arial Black",sans-serif;
+  font-style:italic;
+  font-size:clamp(23px,3vw,36px);
+  transform:skew(-5deg);
+  color:var(--arcade-yellow);
+  text-shadow:
+    2px 2px 0 var(--arcade-pink),
+    4px 4px 0 #4c126e,
+    0 0 12px rgba(255,42,163,.65);
+}
+.arcade-logo .brand-mark{
+  width:42px;height:42px;border-radius:2px;
+  clip-path:polygon(8% 0,100% 0,92% 100%,0 100%);
+  background:linear-gradient(145deg,var(--arcade-yellow),var(--arcade-orange));
+  border:2px solid #fff0a2;
+  box-shadow:5px 5px 0 var(--arcade-pink),0 0 16px rgba(255,227,78,.55);
+  color:#1c0832;
+  font-size:25px;
+  transform:skew(5deg);
+}
+.arcade-logo .brand-sub{
+  font-family:"Courier New",monospace;
+  font-style:normal;
+  transform:skew(5deg);
+  color:var(--arcade-blue);
+  font-size:10px;
+  letter-spacing:.14em;
+  text-shadow:0 0 7px rgba(0,217,255,.8);
+}
+
+.ghost-btn,.icon-btn,.secondary-btn{
+  border-radius:3px;
+  border:2px solid var(--arcade-blue);
+  background:linear-gradient(180deg,#18204a,#0b1029);
+  color:var(--arcade-cream);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.04),3px 3px 0 rgba(255,42,163,.55);
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  font-weight:950;
+}
+.ghost-btn:hover,.icon-btn:hover,.secondary-btn:hover{
+  border-color:var(--arcade-yellow);
+  background:#1e2455;
+  box-shadow:3px 3px 0 var(--arcade-pink),0 0 14px rgba(255,227,78,.18);
+}
+.primary-btn{
+  border-radius:3px;
+  border:2px solid #fff3a1;
+  background:linear-gradient(180deg,#ffe954,#ff9a22);
+  color:#24102f;
+  box-shadow:inset 0 -4px 0 rgba(161,54,0,.4),4px 4px 0 var(--arcade-pink),0 0 16px rgba(255,227,78,.23);
+  text-transform:uppercase;
+  letter-spacing:.045em;
+  font-family:"Arial Black",Impact,sans-serif;
+}
+.primary-btn:hover{box-shadow:inset 0 -4px 0 rgba(161,54,0,.4),5px 5px 0 var(--arcade-pink),0 0 24px rgba(255,227,78,.36)}
+
+.card,.hero-card,.mini-card{
+  border-radius:4px;
+  border:2px solid rgba(0,217,255,.72);
+  background:
+    linear-gradient(180deg,rgba(11,15,40,.96),rgba(6,9,26,.96)),
+    repeating-linear-gradient(135deg,rgba(255,255,255,.02) 0 2px,transparent 2px 6px);
+  box-shadow:
+    inset 0 0 0 3px rgba(255,42,163,.12),
+    5px 6px 0 rgba(21,4,54,.82),
+    0 0 26px rgba(0,217,255,.10);
+}
+.hero-card{
+  border-color:var(--arcade-pink);
+  box-shadow:
+    inset 0 0 0 3px rgba(0,217,255,.12),
+    7px 7px 0 rgba(22,3,62,.8),
+    0 0 35px rgba(255,42,163,.17);
+}
+.hero-card::after{
+  background:
+    linear-gradient(135deg,rgba(255,227,78,.17),rgba(255,42,163,.16)),
+    repeating-linear-gradient(90deg,transparent 0 14px,rgba(0,217,255,.18) 14px 16px);
+  border-radius:0;
+  transform:rotate(-18deg);
+  filter:none;
+}
+.eyebrow{
+  color:var(--arcade-blue);
+  font-family:"Courier New",monospace;
+  letter-spacing:.18em;
+  text-shadow:0 0 8px rgba(0,217,255,.65);
+}
+.eyebrow::before{background:var(--arcade-pink);box-shadow:0 0 7px var(--arcade-pink)}
+h1,.final-hero h1{
+  font-family:Impact,"Arial Black",sans-serif;
+  font-style:italic;
+  text-transform:uppercase;
+  color:var(--arcade-cream);
+  text-shadow:3px 3px 0 #2e0f69,5px 5px 0 rgba(255,42,163,.9);
+}
+.gradient-text{
+  color:var(--arcade-yellow);
+  background:none;
+  -webkit-text-fill-color:var(--arcade-yellow);
+  text-shadow:3px 3px 0 var(--arcade-red),6px 6px 0 #38146b,0 0 12px rgba(255,227,78,.35);
+}
+.lead{color:#d3dcf5}
+.rule-chip{
+  border-radius:2px;
+  border:1px solid rgba(0,217,255,.6);
+  background:linear-gradient(180deg,#151b42,#0c102b);
+  box-shadow:inset 0 -3px 0 rgba(255,42,163,.15);
+}
+.rule-chip b{color:var(--arcade-yellow);font-family:"Arial Black",sans-serif;letter-spacing:.04em}
+.mini-card strong{color:var(--arcade-yellow);font-family:"Arial Black",sans-serif}
+
+.join-panel{
+  border-color:var(--arcade-purple);
+  box-shadow:4px 5px 0 rgba(0,0,0,.55),0 0 24px rgba(154,99,255,.15);
+}
+.field label{color:var(--arcade-blue);font-family:"Courier New",monospace}
+.field input{
+  border-radius:2px;
+  border:2px solid #344176;
+  background:#070a1c;
+  box-shadow:inset 0 0 0 2px rgba(0,217,255,.05);
+  color:var(--arcade-cream);
+}
+.field input:focus{border-color:var(--arcade-yellow);box-shadow:0 0 0 2px rgba(255,42,163,.3)}
+
+.tag,.difficulty{
+  border-radius:2px;
+  border:1px solid rgba(255,227,78,.8);
+  background:#14102c;
+  color:var(--arcade-yellow);
+  font-family:"Courier New",monospace;
+  letter-spacing:.09em;
+}
+
+/* Player score panels: dynamic, compact, no health bars. */
+.arcade-score-strip{
+  display:grid;
+  grid-template-columns:repeat(var(--player-count),minmax(0,1fr));
+  gap:8px;
+  margin:0 0 16px;
+}
+.arcade-player-card{
+  --pc:var(--arcade-blue);
+  min-width:0;
+  display:grid;
+  grid-template-columns:38px minmax(0,1fr) auto;
+  align-items:center;
+  gap:8px;
+  padding:7px 9px 7px 7px;
+  position:relative;
+  background:linear-gradient(180deg,#111735,#080c22);
+  border:2px solid var(--pc);
+  clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
+  box-shadow:inset 0 -4px 0 rgba(0,0,0,.25),0 0 14px color-mix(in srgb,var(--pc) 35%,transparent);
+}
+.arcade-player-card.is-me{box-shadow:inset 0 0 0 2px rgba(255,255,255,.22),0 0 18px color-mix(in srgb,var(--pc) 52%,transparent)}
+.arcade-player-avatar{
+  width:36px;height:36px;
+  display:grid;place-items:center;
+  background:var(--pc);
+  color:#080a17;
+  border:2px solid #fff4c2;
+  font-family:Impact,"Arial Black",sans-serif;
+  font-size:22px;
+  box-shadow:2px 2px 0 #15162b;
+}
+.arcade-player-copy{min-width:0}
+.arcade-player-copy b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:"Arial Black",sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:.02em}
+.arcade-player-label{display:block;color:var(--pc);font-family:"Courier New",monospace;font-size:8px;font-weight:900;letter-spacing:.08em}
+.arcade-player-score{text-align:right;line-height:1}
+.arcade-player-score span{display:block;color:var(--arcade-muted);font-family:"Courier New",monospace;font-size:7px;letter-spacing:.12em}
+.arcade-player-score strong{display:block;color:var(--arcade-yellow);font-family:Impact,"Arial Black",sans-serif;font-size:24px;letter-spacing:.03em;text-shadow:2px 2px 0 #9b2b27}
+.player-color-0{--pc:#ff405b}.player-color-1{--pc:#00d9ff}.player-color-2{--pc:#32f59a}.player-color-3{--pc:#f04cff}
+.player-color-4{--pc:#ff9e29}.player-color-5{--pc:#8d7cff}.player-color-6{--pc:#65ffea}.player-color-7{--pc:#ffd74a}
+
+/* Lobby */
+.room-code{
+  color:var(--arcade-yellow);
+  font-family:Impact,"Arial Black",sans-serif;
+  text-shadow:3px 3px 0 var(--arcade-pink);
+}
+.room-kicker{color:var(--arcade-blue);font-family:"Courier New",monospace}
+.player-row{
+  border-radius:2px;
+  background:#080d23;
+  border-left:4px solid var(--arcade-pink);
+}
+.avatar{border-radius:1px;background:linear-gradient(135deg,var(--arcade-yellow),var(--arcade-orange));color:#24102f}
+.explain-num{border-radius:1px;background:var(--arcade-pink);color:#fff;border:1px solid #ff9fd5}
+
+/* Active round HUD */
+.round-head{
+  padding:8px 10px;
+  background:#080b20;
+  border:2px solid var(--arcade-purple);
+  border-bottom:0;
+  margin-bottom:0;
+}
+.round-label{
+  color:var(--arcade-yellow);
+  font-family:"Arial Black",Impact,sans-serif;
+  font-style:italic;
+  font-size:15px;
+  text-shadow:2px 2px 0 #551a67;
+}
+.timer-wrap{color:var(--arcade-blue);font-family:"Courier New",monospace}
+.timer-num{
+  color:var(--arcade-yellow);
+  font-family:Impact,"Arial Black",sans-serif;
+  font-size:45px;
+  text-shadow:3px 3px 0 var(--arcade-red),0 0 10px rgba(255,227,78,.3);
+}
+.timer-track{
+  height:12px;
+  border-radius:0;
+  border:2px solid #080b20;
+  background:#03040d;
+  margin-bottom:11px;
+}
+.timer-fill{
+  background:linear-gradient(90deg,var(--arcade-blue) 0 45%,var(--arcade-yellow) 68%,var(--arcade-red) 100%);
+  box-shadow:0 0 10px rgba(0,217,255,.45);
+}
+.puzzle-card{
+  border:3px solid var(--arcade-pink);
+  box-shadow:
+    inset 0 0 0 3px #101833,
+    7px 7px 0 #23083f,
+    0 0 26px rgba(255,42,163,.14);
+}
+.puzzle-question{
+  font-family:"Arial Black",Impact,sans-serif;
+  color:var(--arcade-cream);
+  text-align:center;
+  text-shadow:2px 2px 0 #35156c;
+}
+.instruction{
+  padding:8px 10px;
+  border-left:4px solid var(--arcade-yellow);
+  background:#080c22;
+}
+.instruction b{color:var(--arcade-yellow);text-transform:uppercase}
+
+/* Four answer pads: arcade colors, not fighting-game meters. */
+.answer-card{
+  border-radius:3px;
+  border:3px solid rgba(255,255,255,.28);
+  color:#fff;
+  box-shadow:inset 0 -6px 0 rgba(0,0,0,.24),4px 5px 0 rgba(0,0,0,.42);
+  text-shadow:1px 2px 0 rgba(0,0,0,.55);
+  overflow:hidden;
+}
+.answer-grid .answer-card:nth-child(1){background:linear-gradient(180deg,#e82a61,#8e123c);border-color:#ff6c91}
+.answer-grid .answer-card:nth-child(2){background:linear-gradient(180deg,#088de9,#074a9f);border-color:#43c8ff}
+.answer-grid .answer-card:nth-child(3){background:linear-gradient(180deg,#16b76c,#087348);border-color:#51f6a4}
+.answer-grid .answer-card:nth-child(4){background:linear-gradient(180deg,#ef8d18,#ad4a08);border-color:#ffd04d}
+.answer-card b{font-family:"Arial Black",sans-serif;letter-spacing:.01em}
+.answer-letter{
+  border-radius:2px;
+  background:#080b20;
+  color:var(--arcade-yellow);
+  border:2px solid rgba(255,255,255,.5);
+  font-family:Impact,"Arial Black",sans-serif;
+  font-size:22px;
+}
+.answer-card:hover:not(:disabled){
+  filter:brightness(1.12);
+  transform:translateY(-2px);
+  box-shadow:inset 0 -6px 0 rgba(0,0,0,.2),5px 7px 0 rgba(0,0,0,.42),0 0 18px rgba(255,255,255,.12);
+}
+.answer-card.selected-correct,.correct-locked{
+  border-color:var(--arcade-yellow)!important;
+  box-shadow:inset 0 0 0 3px var(--arcade-green),0 0 22px rgba(50,245,154,.45);
+}
+.answer-card.selected-wrong{
+  border-color:#fff!important;
+  box-shadow:inset 0 0 0 3px var(--arcade-red),0 0 22px rgba(255,61,85,.45);
+}
+.trap-grid .trap-btn{
+  background:linear-gradient(180deg,#4b176b,#251144);
+  border-color:var(--arcade-pink);
+  color:#fff;
+}
+.trap-grid .trap-btn:hover{border-color:var(--arcade-yellow);box-shadow:4px 5px 0 #140721,0 0 20px rgba(255,42,163,.33)}
+.success-banner,.wrong-banner{border-radius:2px}
+.success-banner{border:2px solid var(--arcade-green);background:#08291f}
+.wrong-banner{border:2px solid var(--arcade-red);background:#2d0c1a}
+.success-icon,.wrong-icon{border-radius:1px}
+
+/* Reveal = arcade results board */
+.reveal-title{
+  font-family:Impact,"Arial Black",sans-serif;
+  font-style:italic;
+  text-transform:uppercase;
+  color:var(--arcade-yellow);
+  text-shadow:3px 3px 0 var(--arcade-red),6px 6px 0 #3d155f;
+}
+.reveal-sub{color:#d8e3ff}
+.correct-answer{
+  border-radius:2px;
+  border:2px solid var(--arcade-green);
+  background:linear-gradient(90deg,#083725,#0a182c);
+  box-shadow:4px 4px 0 #04130f;
+}
+.correct-answer>span{border-radius:1px;background:var(--arcade-green)}
+.fastest-strip{
+  border-radius:2px;
+  border:2px solid var(--arcade-yellow);
+  background:#191126;
+  color:#e6e5ff;
+}
+.answer-reveal-grid .reveal-option:nth-child(1){border-color:#ff6388}
+.answer-reveal-grid .reveal-option:nth-child(2){border-color:#36bdff}
+.answer-reveal-grid .reveal-option:nth-child(3){border-color:#43e797}
+.answer-reveal-grid .reveal-option:nth-child(4){border-color:#ffc149}
+.reveal-option,.round-player,.leader-row,.stat-box,.ready-person{
+  border-radius:2px;
+  background:#080d23;
+}
+.trap-marker{color:var(--arcade-yellow)}
+.delta,.score{color:var(--arcade-yellow);font-family:Impact,"Arial Black",sans-serif;text-shadow:1px 1px 0 #7c262b}
+.delta.negative{color:#ff7084}
+
+.leaderboard-card,.ready-card{border-color:var(--arcade-purple)}
+.leader-head h3,.ready-head h3{font-family:"Arial Black",sans-serif;text-transform:uppercase;color:var(--arcade-yellow)}
+.ready-person.ready{border-color:var(--arcade-green);color:var(--arcade-green);background:#09291f}
+
+/* Final scoreboard */
+.final-hero{
+  border:3px solid var(--arcade-yellow);
+  background:
+    radial-gradient(circle at 50% 0,rgba(255,42,163,.18),transparent 42%),
+    linear-gradient(180deg,#171036,#070a1d);
+}
+.trophy{filter:drop-shadow(3px 3px 0 var(--arcade-pink))}
+.stat-box{border:2px solid var(--arcade-blue)}
+.stat-box strong{font-family:Impact,"Arial Black",sans-serif;color:var(--arcade-yellow);text-shadow:2px 2px 0 var(--arcade-red)}
+.award-row span{border-radius:2px;border:1px solid var(--arcade-purple);background:#0b0e26}
+
+/* Modal + misc */
+.modal{
+  border-radius:3px;
+  border:3px solid var(--arcade-pink);
+  background:#080c22;
+  box-shadow:7px 7px 0 #24073e,0 0 34px rgba(255,42,163,.2);
+}
+.modal h2{font-family:Impact,"Arial Black",sans-serif;text-transform:uppercase;color:var(--arcade-yellow)}
+.toast{border-radius:2px;background:var(--arcade-yellow);color:#1a1027;border:2px solid #fff4af;box-shadow:4px 4px 0 var(--arcade-pink)}
+.error-box{border-radius:2px}
+
+/* Responsive score cards retain all players without pretending to be health bars. */
+@media(max-width:900px){
+  .arcade-score-strip{
+    display:flex;
+    overflow-x:auto;
+    gap:7px;
+    padding-bottom:4px;
+    scrollbar-width:thin;
+  }
+  .arcade-player-card{min-width:160px;flex:1 0 160px}
+}
+@media(max-width:620px){
+  .arcade-topbar{align-items:center}
+  .arcade-logo{font-size:24px}
+  .arcade-logo .brand-mark{width:34px;height:34px;font-size:20px}
+  .arcade-player-card{min-width:145px;grid-template-columns:32px minmax(0,1fr) auto;padding:6px}
+  .arcade-player-avatar{width:30px;height:30px;font-size:18px}
+  .arcade-player-score strong{font-size:20px}
+  .puzzle-question{text-align:left;font-size:26px}
+  .answer-card{min-height:78px}
+}
