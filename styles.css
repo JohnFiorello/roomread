@@ -1966,3 +1966,128 @@ body{
 @media(max-width:620px){
   .battle-logo-img{max-height:64px}
 }
+
+
+
+/* =========================================================
+   CONCEPT-MATCH COLOR / CABINET PASS
+   ========================================================= */
+@media(min-width:981px){
+  .arcade-game-scene{
+    background:transparent;
+  }
+  .arcade-game-scene::before{
+    background:
+      linear-gradient(180deg,rgba(2,3,16,.01),rgba(2,3,16,.05)),
+      radial-gradient(circle at 50% 38%,rgba(255,42,163,.03),transparent 36%);
+  }
+  .battle-roster{
+    grid-template-columns:minmax(0,1fr) 360px minmax(0,1fr);
+  }
+  .battle-logo-wrap{
+    width:360px;
+    height:124px;
+  }
+  .battle-logo-img{
+    max-height:104px;
+    filter:
+      drop-shadow(3px 4px 0 rgba(0,0,0,.62))
+      drop-shadow(0 0 10px rgba(255,42,163,.24));
+  }
+  .battle-tagline{
+    margin-top:3px;
+    font-size:9px;
+  }
+  .arcade-player-card{
+    height:88px;
+    grid-template-columns:52px minmax(0,1fr) auto;
+    padding:8px 10px 8px 8px;
+    border-width:3px;
+    box-shadow:
+      inset 0 0 0 2px rgba(255,255,255,.04),
+      0 0 16px color-mix(in srgb,var(--pc) 45%,transparent),
+      4px 4px 0 rgba(0,0,0,.48);
+  }
+  .arcade-player-avatar{
+    width:50px;height:50px;
+    border-width:2px;
+  }
+  .arcade-player-copy b{
+    font-size:14px;
+  }
+  .arcade-player-label{font-size:9px}
+  .arcade-player-score strong{
+    font-size:31px;
+    text-shadow:2px 2px 0 #8d2b25,0 0 8px rgba(255,227,78,.2);
+  }
+
+  .arena-layout{
+    grid-template-columns:minmax(0,1fr) 264px;
+    gap:12px;
+  }
+  .round-chrome{
+    border-color:#00d9ff;
+    box-shadow:
+      inset 0 0 0 2px rgba(255,42,163,.38),
+      4px 4px 0 rgba(30,6,63,.68),
+      0 0 18px rgba(0,217,255,.16);
+  }
+  .round-chrome::before,
+  .round-chrome::after{
+    content:"";
+    position:absolute;
+    top:-3px;
+    width:22%;
+    height:4px;
+    background:#ff2aa3;
+    box-shadow:0 0 8px rgba(255,42,163,.6);
+  }
+  .round-chrome::before{left:5%}
+  .round-chrome::after{right:5%}
+  .round-chrome{position:relative}
+
+  .puzzle-panel{
+    border-color:#ff2aa3;
+    outline:2px solid rgba(0,217,255,.55);
+    outline-offset:-8px;
+    box-shadow:
+      0 0 0 2px #ffe34e,
+      7px 7px 0 rgba(23,4,55,.76),
+      0 0 26px rgba(255,42,163,.2);
+    background:
+      linear-gradient(180deg,rgba(4,7,23,.94),rgba(5,6,20,.94)),
+      repeating-linear-gradient(180deg,rgba(255,255,255,.018) 0 1px,transparent 1px 4px);
+  }
+  .puzzle-question{
+    color:#fff4d5;
+    text-shadow:
+      2px 2px 0 #2f0d5d,
+      0 0 6px rgba(255,255,255,.08);
+  }
+  .arcade-game-scene .answer-card{
+    border-width:3px;
+    box-shadow:
+      inset 0 -6px 0 rgba(0,0,0,.26),
+      inset 0 2px 0 rgba(255,255,255,.17),
+      4px 5px 0 rgba(0,0,0,.46),
+      0 0 10px rgba(255,255,255,.04);
+  }
+  .arcade-game-scene .answer-letter{
+    border-color:#fff3c5;
+    box-shadow:2px 2px 0 rgba(0,0,0,.45);
+  }
+  .score-callout{
+    border:2px solid #00d9ff;
+    box-shadow:inset 0 0 0 1px rgba(255,42,163,.3),3px 3px 0 rgba(0,0,0,.44);
+  }
+  .call-miss-panel{
+    border-color:#ff2aa3;
+    box-shadow:
+      inset 0 0 0 2px rgba(0,217,255,.44),
+      6px 6px 0 rgba(25,4,52,.74),
+      0 0 22px rgba(255,42,163,.2);
+  }
+  .miss-panel-idle,.miss-panel-live{
+    border-color:#00d9ff;
+  }
+}
