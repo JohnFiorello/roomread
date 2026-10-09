@@ -1518,3 +1518,137 @@ body::after{display:none}
     linear-gradient(180deg,rgba(1,3,15,.04),rgba(1,3,15,.14)),
     radial-gradient(circle at 50% 38%,rgba(255,42,163,.03),transparent 32%);
 }
+
+
+
+/* =========================================================
+   CONCEPT-MATCH PASS 2 — fill the 16:9 cabinet like the mockup
+   ========================================================= */
+body{
+  background-image:url("assets/arcade-bg.svg?v=4");
+  background-position:center;
+  background-size:cover;
+}
+@media(min-width:981px){
+  .page.arcade-page{
+    width:100%;
+    max-width:none;
+    min-height:100vh;
+    padding:0;
+  }
+  .arcade-game-scene{
+    width:100%;
+    min-height:100vh;
+    padding:8px 12px 14px;
+    border:0;
+    box-shadow:none;
+  }
+  .arcade-game-scene .battle-meta{
+    opacity:.34;
+    transform:scale(.84);
+    transform-origin:top right;
+  }
+  .battle-header{
+    min-height:126px;
+    padding:0 4px 6px;
+  }
+  .battle-roster{
+    min-height:116px;
+    grid-template-columns:minmax(0,1fr) 282px minmax(0,1fr);
+    gap:9px;
+  }
+  .battle-logo-wrap{
+    width:282px;
+    height:102px;
+  }
+  .battle-logo{
+    font-size:61px;
+  }
+  .arcade-player-card{
+    height:72px;
+  }
+  .arcade-player-avatar{
+    width:39px;height:39px;font-size:21px;
+  }
+  .arcade-player-copy b{font-size:12px}
+  .arcade-player-score strong{font-size:23px}
+
+  .arena-layout{
+    width:min(1490px,98.5%);
+    margin:0 auto;
+    grid-template-columns:minmax(0,1fr) 236px;
+    gap:11px;
+  }
+  .round-chrome{
+    width:68%;
+    min-height:56px;
+    grid-template-columns:1fr 80px 1fr;
+    font-size:9px;
+  }
+  .timer-hex{
+    width:72px;height:62px;
+  }
+  .timer-hex strong{font-size:37px}
+
+  .puzzle-panel{
+    width:76%;
+    min-height:190px;
+    padding:22px 32px;
+  }
+  .puzzle-question{
+    font-size:clamp(31px,2.55vw,44px);
+  }
+  .answer-zone{
+    width:76%;
+    margin-top:9px;
+  }
+  .arcade-game-scene .answer-grid{
+    gap:9px;
+  }
+  .arcade-game-scene .answer-card{
+    min-height:78px;
+    padding:9px 12px;
+  }
+  .arcade-game-scene .answer-card b{
+    font-size:18px;
+  }
+  .arcade-game-scene .answer-letter{
+    width:40px;height:40px;font-size:21px;
+  }
+  .score-callout{
+    width:50%;
+    min-height:42px;
+    margin-top:9px;
+    font-size:10px;
+  }
+  .score-callout strong{font-size:15px}
+
+  .call-miss-panel{
+    min-height:548px;
+    padding:9px;
+  }
+  .call-miss-logo{
+    font-size:30px;
+    padding-top:8px;
+  }
+  .call-miss-logo span{font-size:42px}
+  .miss-panel-idle,.miss-panel-live{
+    gap:10px;
+    padding:12px 9px;
+  }
+  .miss-fist{
+    width:112px;height:112px;
+    font-size:72px;
+  }
+  .miss-panel-idle p,.miss-panel-live p{font-size:10px}
+  .miss-panel-idle strong,.miss-panel-live .miss-panel-title{font-size:14px}
+  .miss-panel-idle span{font-size:10px}
+  .miss-cta{min-height:40px;font-size:11px}
+
+  .status-ticker{
+    width:71%;
+    margin-top:8px;
+    padding:5px 8px;
+    font-size:8px;
+  }
+}
