@@ -184,10 +184,24 @@
   }
 
   function topbar(extra=""){
-    return '<div class="topbar">'+
-      '<div class="brand"><span class="brand-mark">M</span><div>MISSPICK<span class="brand-sub">working title • solve fast • call the miss</span></div></div>'+
-      '<div class="top-actions">'+extra+'<button class="ghost-btn" data-action="rules">How to play</button></div>'+
+    return '<div class="topbar arcade-topbar">'+
+      '<div class="brand arcade-logo"><span class="brand-mark">M</span><div>MISSPICK<span class="brand-sub">SOLVE FAST • CALL THE MISS</span></div></div>'+
+      '<div class="top-actions">'+extra+'<button class="ghost-btn" data-action="rules">HOW TO PLAY</button></div>'+
     '</div>';
+  }
+
+  function arcadePlayerStrip(ps){
+    const players=ps?.players||[];
+    if(!players.length) return "";
+    return '<section class="arcade-score-strip" style="--player-count:'+players.length+'">'+
+      players.map((p,i)=>
+        '<div class="arcade-player-card player-color-'+(i%8)+' '+(p.id===state.meId?"is-me":"")+'">'+
+          '<div class="arcade-player-avatar">'+esc(p.name.charAt(0).toUpperCase())+'</div>'+
+          '<div class="arcade-player-copy"><span class="arcade-player-label">P'+(i+1)+(p.id===state.meId?' • YOU':'')+'</span><b>'+esc(p.name)+'</b></div>'+
+          '<div class="arcade-player-score"><span>SCORE</span><strong>'+Number(p.score||0)+'</strong></div>'+
+        '</div>'
+      ).join("")+
+    '</section>';
   }
 
   function rulesModal(){
@@ -250,6 +264,7 @@
     const roomUrl = location.origin + location.pathname + "?room=" + encodeURIComponent(ps.room);
     return '<main class="page">'+
       topbar('<span class="tag">'+(isHost?"HOST":"JOINED")+'</span>')+
+      arcadePlayerStrip(ps)+
       '<div class="room-head"><div><div class="room-kicker">Room code</div><div class="room-code">'+esc(ps.room)+'</div></div><button class="ghost-btn" data-action="leave">Leave</button></div>'+
       '<section class="lobby-grid">'+
         '<div class="card">'+
@@ -310,6 +325,7 @@
 
     return '<main class="page"><div class="game-wrap">'+
       topbar('<span class="tag">'+esc(ps.room)+'</span>')+
+      arcadePlayerStrip(ps)+
       '<div class="round-head"><div><span class="round-label">'+(lightning?"⚡ LIGHTNING ROUND":"ROUND "+(g.round+1)+" OF "+TOTAL_ROUNDS)+'</span><span class="difficulty">'+esc(g.tier.toUpperCase())+'</span></div><div class="timer-wrap"><div id="timer-num" class="timer-num">—</div><span>seconds</span></div></div>'+
       '<div class="timer-track"><div id="timer-fill" class="timer-fill"></div></div>'+
       '<section class="card puzzle-card">'+
@@ -357,6 +373,7 @@
 
     return '<main class="page"><div class="game-wrap">'+
       topbar('<span class="tag">'+esc(ps.room)+'</span>')+
+      arcadePlayerStrip(ps)+
       '<div class="reveal-title">'+(mine && mine.correct ? (mine.id===r.fastestId?"Fastest brain in the room.":"You got it.") : "Answer revealed.")+'</div>'+
       '<p class="reveal-sub">'+(mineDelta>=0?"+":"")+mineDelta+' this round • '+esc(r.explain)+'</p>'+
       '<section class="card reveal-card">'+
@@ -416,6 +433,7 @@
 
     return '<main class="page"><div class="game-wrap">'+
       topbar('<span class="tag">FINAL</span>')+
+      arcadePlayerStrip(ps)+
       '<section class="card final-hero">'+
         '<div class="trophy">🧠🎯</div>'+
         '<h1>'+(winners.length>1?"Dead heat.":esc(winners[0].name)+" wins MISSPICK.")+'</h1>'+
