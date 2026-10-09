@@ -1525,7 +1525,7 @@ body::after{display:none}
    CONCEPT-MATCH PASS 2 — fill the 16:9 cabinet like the mockup
    ========================================================= */
 body{
-  background-image:url("assets/arcade-bg.svg?v=4");
+  background-image:url("assets/arcade-bg.svg?v=5");
   background-position:center;
   background-size:cover;
 }
