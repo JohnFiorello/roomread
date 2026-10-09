@@ -214,7 +214,7 @@
     return '<header class="battle-header">'+
       '<div class="battle-roster">'+
         '<div class="roster-half roster-left">'+left.map((p,i)=>arcadePlayerCard(p,i)).join("")+'</div>'+
-        '<div class="battle-logo-wrap"><div class="battle-logo">MISSPICK</div><div class="battle-tagline">SOLVE FAST • CALL THE MISS</div></div>'+
+        '<div class="battle-logo-wrap"><img class="battle-logo-img" src="assets/misspick-logo.svg" alt="MISSPICK"><div class="battle-tagline">SOLVE FAST • CALL THE MISS</div></div>'+
         '<div class="roster-half roster-right">'+right.map((p,i)=>arcadePlayerCard(p,cut+i)).join("")+'</div>'+
       '</div>'+
     '</header>';
@@ -243,7 +243,7 @@
       '<section class="arcade-home-scene">'+
         topbar()+
         '<div class="home-marquee">'+
-          '<div class="battle-logo home-logo">MISSPICK</div>'+
+          '<img class="battle-logo-img home-logo-img" src="assets/misspick-logo.svg" alt="MISSPICK">'+
           '<div class="battle-tagline">SOLVE FAST • CALL THE MISS</div>'+
           '<div class="eyebrow">LIVE MULTIPLAYER • 2–8 PLAYERS</div>'+
           '<h1 class="home-headline">Beat the puzzle.<br><span>Call their mistake.</span></h1>'+
