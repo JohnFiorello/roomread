@@ -100,6 +100,8 @@ const correctFor = (q, options) => {
       await qEl.waitFor({timeout:10000});
       const q = (await qEl.textContent()).trim();
       if(round===3){
+        await host.evaluate(()=>window.scrollTo(0,0));
+        await host.waitForTimeout(1800);
         await host.screenshot({path:"e2e-cover.png",fullPage:false});
       }
       const optionTexts = await host.locator(".answer-btn b").allTextContents();
