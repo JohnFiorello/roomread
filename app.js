@@ -192,7 +192,7 @@
 
   function arcadePlayerCard(p,i){
     return '<div class="arcade-player-card player-color-'+(i%8)+' '+(p.id===state.meId?"is-me":"")+'">'+
-      '<div class="arcade-player-avatar">'+esc(p.name.charAt(0).toUpperCase())+'</div>'+
+      '<div class="arcade-player-avatar"><svg class="avatar-svg" viewBox="0 0 48 48" aria-hidden="true"><use href="assets/arcade-avatars.svg#av'+(i%8)+'"></use></svg></div>'+
       '<div class="arcade-player-copy"><span class="arcade-player-label">P'+(i+1)+(p.id===state.meId?' • YOU':'')+'</span><b>'+esc(p.name)+'</b></div>'+
       '<div class="arcade-player-score"><span>SCORE</span><strong>'+Number(p.score||0)+'</strong></div>'+
     '</div>';
