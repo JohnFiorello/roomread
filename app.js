@@ -996,6 +996,33 @@
   });
 
   window.addEventListener("beforeunload",resetNetwork);
+
+  // Visual-review mode uses the exact production question renderer without
+  // opening a multiplayer connection. It is intentionally read-only.
+  const previewMode = new URLSearchParams(location.search).get("preview");
+  if(previewMode==="question"){
+    const now=Date.now();
+    state.mode="host";
+    state.meId="p-host";
+    state.publicState={
+      room:"ARCADE",
+      players:[
+        {id:"p-host",name:"John",score:7,trapHits:1,fastestWins:2,isHost:true,connected:true},
+        {id:"p-alex",name:"Alex",score:5,trapHits:1,fastestWins:1,isHost:false,connected:true},
+        {id:"p-sam",name:"Sam",score:4,trapHits:0,fastestWins:1,isHost:false,connected:true},
+        {id:"p-riley",name:"Riley",score:3,trapHits:1,fastestWins:0,isHost:false,connected:true}
+      ],
+      game:{
+        phase:"question",round:2,tier:"medium",
+        hostNow:now,startAt:now-2200,deadline:now+11800,duration:14000,youTrapUntil:0,
+        puzzle:{q:"Which planet is known as the Red Planet?",options:["Venus","Mars","Jupiter","Saturn"]},
+        status:{answered:1,traps:0}
+      },
+      you:{answer:null,trap:null}
+    };
+    applyTiming(state.publicState.game);
+  }
+
   startUiTicker();
   render();
 })();
