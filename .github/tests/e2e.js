@@ -145,15 +145,15 @@ const correctFor = (q, options) => {
       // When both are ready, the host automatically starts the next round.
       await guest.getByRole("button",{name:/ready for (the next round|final results)/i}).click();
       if(round<8){
-        const label = round===7 ? "⚡ LIGHTNING ROUND" : "ROUND "+(round+1)+" OF 8";
+        const label = round===7 ? /LIGHTNING ROUND/i : new RegExp("ROUND\\s+"+(round+1)+"\\s+\\/\\s+8","i");
         await host.getByText(label).waitFor({timeout:12000});
         await guest.getByText(label).waitFor({timeout:12000});
       }
 
     }
 
-    await host.getByText("Misses you called").waitFor({timeout:10000});
-    await guest.getByText("Misses you called").waitFor({timeout:10000});
+    await host.getByText(/MISSES YOU CALLED/i).waitFor({timeout:10000});
+    await guest.getByText(/MISSES YOU CALLED/i).waitFor({timeout:10000});
     await host.screenshot({path:"e2e-final.png",fullPage:true});
 
     console.log("MISSPICK E2E PASS against "+base+": real PeerJS room, two isolated browsers, eight timed rounds, successful miss calls, all-player ready gate and synchronized final.");
