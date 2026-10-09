@@ -1751,3 +1751,35 @@ body{
     font-size:8px;
   }
 }
+
+
+
+/* =========================================================
+   CONCEPT-MATCH FINAL DETAIL PASS
+   ========================================================= */
+@media(min-width:981px){
+  .arcade-game-scene .status-ticker{display:none}
+  .arcade-game-scene .answer-card{
+    position:relative;
+    overflow:hidden;
+  }
+  .arcade-game-scene .answer-card::after{
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%) skew(-8deg);
+    font-family:Impact,"Arial Black",sans-serif;
+    font-size:64px;
+    line-height:1;
+    color:rgba(255,255,255,.08);
+    text-shadow:none;
+    pointer-events:none;
+  }
+  .arcade-game-scene .answer-grid .answer-card:nth-child(1)::after{content:"A"}
+  .arcade-game-scene .answer-grid .answer-card:nth-child(2)::after{content:"B"}
+  .arcade-game-scene .answer-grid .answer-card:nth-child(3)::after{content:"C"}
+  .arcade-game-scene .answer-grid .answer-card:nth-child(4)::after{content:"D"}
+  .arcade-game-scene .answer-card>span,
+  .arcade-game-scene .answer-card>b{position:relative;z-index:2}
+  .arcade-game-scene .answer-card span b{position:relative;z-index:2}
+}
