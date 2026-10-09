@@ -83,9 +83,10 @@ const correctFor = (q, options) => {
     await host.locator("#name").fill("HostBot");
     await host.screenshot({path:"e2e-home.png",fullPage:false});
     await host.getByRole("button",{name:/create a room/i}).click();
-    const roomEl = host.locator(".room-code");
+    const roomEl = host.locator(".waiting-room-code");
     await roomEl.waitFor({timeout:15000});
-    const room = (await roomEl.textContent()).trim();
+    const roomText = (await roomEl.textContent()).trim();
+    const room = (roomText.match(/[A-Z2-9]{6}/)||[])[0]||"";
     if(!/^[A-Z2-9]{6}$/.test(room)) throw new Error("Bad room code: "+room);
 
     await guest.locator("#name").fill("GuestBot");
@@ -94,7 +95,7 @@ const correctFor = (q, options) => {
 
     await host.locator(".arcade-player-card").nth(1).waitFor({timeout:20000});
     await guest.locator(".arcade-player-card").nth(1).waitFor({timeout:20000});
-    await host.getByText(/2 PLAYERS CONNECTED/i).waitFor({timeout:10000});
+    await host.locator(".waiting-dots i.on").nth(1).waitFor({timeout:10000});
     await host.screenshot({path:"e2e-lobby.png",fullPage:false});
     await host.getByRole("button",{name:/start game/i}).click();
 
