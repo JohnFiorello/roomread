@@ -1,0 +1,36 @@
+name: MISSPICK iPhone Smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app.js"
+      - "styles.css"
+      - "index.html"
+      - ".github/tests/misspick-ios.js"
+      - ".github/workflows/misspick-ios.yml"
+  workflow_dispatch:
+
+jobs:
+  iphone:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Chromium and WebKit
+        run: |
+          npm init -y
+          npm install --save-dev playwright
+          npx playwright install --with-deps chromium webkit
+      - name: Test iPhone join and modal close
+        run: node .github/tests/misspick-ios.js
+      - name: Upload iPhone screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: misspick-iphone-smoke
+          path: misspick-iphone-lobby.png
+          if-no-files-found: ignore
