@@ -16,6 +16,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     await Promise.all([host.goto(base),iphone.goto(base),third.goto(base)]);
     if(!((await host.title()).includes("THAT TRACKS"))) throw new Error("Wrong game loaded");
 
+    await host.screenshot({path:"that-tracks-home.png",fullPage:true});
     await host.locator("#name").fill("Host");
     await host.getByRole("button",{name:/create a room/i}).click();
     await host.locator(".room-code").waitFor({timeout:15000});
@@ -75,6 +76,8 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     await submit(host,"Beach");
     await submit(iphone,"Mountains");
     await submit(third,"City");
+    await host.locator(".choice-list").waitFor({timeout:15000});
+    await host.screenshot({path:"that-tracks-gameplay.png",fullPage:true});
     await voteFor(host,"Mountains");
     await voteFor(third,"Beach");
     await iphone.locator(".reveal-answer").waitFor({timeout:10000});
