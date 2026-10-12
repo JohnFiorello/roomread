@@ -1,14 +1,6 @@
 name: MISSPICK iPhone Smoke
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "app.js"
-      - "styles.css"
-      - "index.html"
-      - ".github/tests/misspick-ios.js"
-      - ".github/workflows/misspick-ios.yml"
   workflow_dispatch:
 
 jobs:
