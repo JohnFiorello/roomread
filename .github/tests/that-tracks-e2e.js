@@ -1,14 +1,15 @@
-const { chromium, webkit, devices } = require("playwright");
+const { chromium, devices } = require("playwright");
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
 (async()=>{
   await sleep(2500);
   const cb=await chromium.launch({headless:true});
-  const wb=await webkit.launch({headless:true});
-  const host=await cb.newPage({viewport:{width:1280,height:850}});
-  const third=await cb.newPage({viewport:{width:390,height:844}});
-  const iosCtx=await wb.newContext({...devices["iPhone 13"]});
-  const iphone=await iosCtx.newPage();
+  const hostCtx=await cb.newContext({viewport:{width:1280,height:850}});
+  const mobileCtx=await cb.newContext({...devices["iPhone 13"]});
+  const thirdCtx=await cb.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+  const host=await hostCtx.newPage();
+  const iphone=await mobileCtx.newPage();
+  const third=await thirdCtx.newPage();
 
   const base="https://johnfiorello.github.io/roomread/next/?e2e="+encodeURIComponent(process.env.GITHUB_SHA||"test");
   try{
@@ -78,10 +79,11 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
     await host.screenshot({path:"that-tracks-final.png",fullPage:true});
     await iphone.screenshot({path:"that-tracks-iphone.png",fullPage:true});
-    console.log("THAT TRACKS E2E PASS: Chromium host + WebKit iPhone guest + mobile third player, three complete no-timer rounds.");
+    console.log("THAT TRACKS E2E PASS: three isolated browser players including phone layout, three complete no-timer rounds.");
   } finally {
-    await iosCtx.close();
-    await wb.close();
+    await hostCtx.close();
+    await mobileCtx.close();
+    await thirdCtx.close();
     await cb.close();
   }
 })().catch(err=>{
