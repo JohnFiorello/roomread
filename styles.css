@@ -2091,3 +2091,156 @@ body{
     border-color:#00d9ff;
   }
 }
+
+
+
+/* =========================================================
+   MOBILE USABILITY FIXES
+   ========================================================= */
+@media(max-width:760px){
+  html,body{overflow-x:hidden}
+  .page.arcade-page{padding:6px;width:100%;max-width:100%}
+  .arcade-home-scene,.arcade-lobby-scene,.arcade-game-scene,.arcade-results-scene,.arcade-final-scene{
+    min-height:100svh;
+    padding:8px;
+    overflow:visible;
+  }
+  .arcade-utility{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(5,8,23,.92);
+    backdrop-filter:blur(8px);
+  }
+  .utility-actions{gap:5px}
+  .arcade-score-strip,.battle-roster{
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scrollbar-width:thin;
+    -webkit-overflow-scrolling:touch;
+  }
+  .battle-roster{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    min-height:auto;
+    padding:4px 0 8px;
+  }
+  .battle-logo-wrap{
+    order:-1;
+    flex:0 0 150px;
+    width:150px!important;
+    height:auto!important;
+    margin-right:4px;
+  }
+  .battle-logo-img{max-height:58px!important}
+  .battle-tagline{font-size:7px}
+  .roster-half{display:flex;gap:7px;flex:0 0 auto}
+  .arcade-player-card{
+    min-width:142px!important;
+    height:58px!important;
+    flex:0 0 142px!important;
+    grid-template-columns:32px minmax(0,1fr) auto!important;
+    padding:5px!important;
+  }
+  .arcade-player-avatar{width:30px!important;height:30px!important;font-size:17px!important}
+  .arcade-player-copy b{font-size:11px!important}
+  .arcade-player-label{font-size:7px!important}
+  .arcade-player-score strong{font-size:19px!important}
+
+  .arena-layout{
+    width:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:10px!important;
+    margin:0!important;
+  }
+  .question-stage{width:100%;min-width:0}
+  .round-chrome{
+    width:100%!important;
+    min-height:54px!important;
+    grid-template-columns:1fr 72px!important;
+    padding:4px 8px!important;
+  }
+  .round-chrome>span:last-child{display:none}
+  .timer-hex{width:66px!important;height:56px!important}
+  .timer-hex strong{font-size:31px!important}
+  .puzzle-panel{
+    width:100%!important;
+    min-height:140px!important;
+    padding:18px 16px!important;
+    clip-path:none!important;
+    outline-offset:-5px;
+  }
+  .puzzle-question{
+    font-size:clamp(24px,7vw,34px)!important;
+    text-align:left!important;
+    line-height:1.12!important;
+  }
+  .answer-zone{width:100%!important;margin-top:8px!important}
+  .arcade-game-scene .answer-grid{grid-template-columns:1fr!important;gap:7px!important}
+  .arcade-game-scene .answer-card{
+    min-height:64px!important;
+    padding:10px 11px!important;
+  }
+  .arcade-game-scene .answer-card b{font-size:16px!important}
+  .arcade-game-scene .answer-letter{width:34px!important;height:34px!important;font-size:18px!important}
+  .score-callout{
+    width:100%!important;
+    margin-top:7px!important;
+    display:flex!important;
+    justify-content:space-between!important;
+    font-size:9px!important;
+  }
+
+  .call-miss-panel{
+    width:100%!important;
+    min-height:0!important;
+    padding:8px!important;
+    clip-path:none!important;
+    order:2;
+  }
+  .call-miss-logo{font-size:24px!important;padding:4px!important}
+  .call-miss-logo span{font-size:31px!important}
+  .miss-panel-idle,.miss-panel-live{min-height:130px!important}
+  .miss-fist{width:64px!important;height:64px!important;font-size:40px!important}
+  .miss-choice-grid{grid-template-columns:1fr!important}
+  .miss-choice{min-height:44px!important;font-size:12px!important}
+  .status-ticker{width:100%!important;font-size:8px!important;gap:7px!important}
+
+  .home-marquee,.waiting-cabinet,.lobby-cabinet,.results-board,.arcade-board,.arcade-ready-card,.arcade-final-board{
+    width:100%!important;
+  }
+  .home-marquee{margin-top:3vh!important;padding:20px 12px!important}
+  .home-logo-img{width:min(430px,95%)}
+  .home-headline{font-size:34px!important}
+  .home-rule-row,.lobby-how-row{width:100%!important;grid-template-columns:1fr!important}
+  .arcade-join-panel{width:100%!important;grid-template-columns:1fr!important}
+  .lobby-cabinet{grid-template-columns:1fr!important}
+  .room-code{font-size:55px!important}
+  .results-board .answer-reveal-grid{grid-template-columns:1fr!important}
+  .ready-head{flex-direction:column!important;gap:8px!important}
+  .actions-center .primary-btn,.actions-center .secondary-btn{width:100%;min-height:48px}
+
+  .modal-backdrop{padding:10px}
+  .modal{
+    width:100%;
+    max-height:88svh;
+    padding:16px;
+    overflow:auto;
+    border-width:2px;
+  }
+  .modal-head{
+    position:sticky;
+    top:-16px;
+    z-index:2;
+    background:#080c22;
+    padding:10px 0 8px;
+  }
+  .modal-head .icon-btn{
+    width:44px;height:44px;
+    display:grid;place-items:center;
+    font-size:20px;
+    flex:0 0 44px;
+  }
+}
