@@ -22,8 +22,8 @@ jobs:
         run: |
           npm init -y
           npm install --save-dev playwright
-          npx playwright install --with-deps chromium webkit
-      - name: Run Chromium + iPhone WebKit multiplayer test
+          npx playwright install --with-deps chromium
+      - name: Run three-player mobile multiplayer test
         run: node .github/tests/that-tracks-e2e.js
       - name: Upload screenshots
         if: always()
