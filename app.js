@@ -7,6 +7,24 @@
   const ROOM_CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const TRAP_WINDOW_MS = 3200;
 
+  // Explicit ICE/TURN fallback improves WebRTC data-channel reliability on
+  // Safari/iOS and restrictive mobile/corporate networks.
+  const PEER_OPTIONS = {
+    debug:0,
+    pingInterval:5000,
+    config:{
+      sdpSemantics:"unified-plan",
+      iceServers:[
+        {urls:"stun:stun.l.google.com:19302"},
+        {urls:"stun:stun1.l.google.com:19302"},
+        {urls:"stun:openrelay.metered.ca:80"},
+        {urls:"turn:openrelay.metered.ca:80",username:"openrelayproject",credential:"openrelayproject"},
+        {urls:"turn:openrelay.metered.ca:443",username:"openrelayproject",credential:"openrelayproject"},
+        {urls:"turn:openrelay.metered.ca:443?transport=tcp",username:"openrelayproject",credential:"openrelayproject"}
+      ]
+    }
+  };
+
   const PUZZLES = [
     {tier:"easy", q:"What comes next?  2, 4, 6, 8, ?", options:["9","10","12","16"], correct:1, explain:"The sequence adds 2 each time."},
     {tier:"easy", q:"You pass the runner in 2nd place. What place are you in?", options:["1st","2nd","3rd","It depends"], correct:1, explain:"You take the 2nd-place runner's position."},
@@ -222,8 +240,8 @@
 
   function rulesModal(){
     if(!state.modal) return "";
-    return '<div class="modal-backdrop" data-action="close-rules">'+
-      '<div class="modal" role="dialog" aria-modal="true" onclick="event.stopPropagation()">'+
+    return '<div class="modal-backdrop">'+
+      '<div class="modal" role="dialog" aria-modal="true" aria-label="How to play">'+
         '<div class="modal-head"><h2>How MISSPICK works</h2><button class="icon-btn" data-action="close-rules" aria-label="Close">✕</button></div>'+
         '<ol>'+
           '<li><b>Solve the puzzle.</b> Everyone gets the same four-choice brain teaser and a short countdown.</li>'+
@@ -569,7 +587,7 @@
       state.mode="home";state.joining=false;
       return setError("Could not create a room. Check your connection and try again.");
     }
-    const peer=new Peer(PEER_PREFIX+state.room.toLowerCase(),{debug:0});
+    const peer=new Peer(PEER_PREFIX+state.room.toLowerCase(),PEER_OPTIONS);
     state.peer=peer;
     peer.on("open",()=>{
       state.joining=false;
@@ -686,17 +704,17 @@
     resetNetwork();
     state.mode="guest";state.name=name;state.room=room;state.error="";state.joining=true;
     render();
-    const peer=new Peer(undefined,{debug:0});
+    const peer=new Peer(undefined,PEER_OPTIONS);
     state.peer=peer;
     peer.on("open",()=>{
-      const conn=peer.connect(PEER_PREFIX+room.toLowerCase(),{reliable:true,serialization:"json"});
+      const conn=peer.connect(PEER_PREFIX+room.toLowerCase(),{serialization:"json"});
       state.hostConn=conn;
       const timeout=setTimeout(()=>{
         if(state.joining){
           state.mode="home";state.joining=false;resetNetwork();
           setError("Room not found. Double-check the code and try again.");
         }
-      },7500);
+      },15000);
       conn.on("open",()=>conn.send({type:"join",name:state.name,token:state.token}));
       conn.on("data",msg=>{
         if(msg.type==="joined"){
@@ -967,6 +985,9 @@
   }
 
   document.addEventListener("click",async e=>{
+    if(state.modal && e.target.classList?.contains("modal-backdrop")){
+      state.modal=false;render();return;
+    }
     const el=e.target.closest("[data-action]");
     if(!el) return;
     const a=el.dataset.action;
