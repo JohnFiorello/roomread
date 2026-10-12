@@ -46,7 +46,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
       await page.locator("#answer").waitFor({timeout:15000});
       await page.locator("#answer").fill(text);
       await page.getByRole("button",{name:/lock answer/i}).click();
-      await page.getByText(/answer locked/i).waitFor({timeout:10000});
+      await page.locator("#answer").waitFor({state:"detached",timeout:10000});
     }
     async function ready(page){
       const b=page.getByRole("button",{name:/i.m ready|see final scores/i});
