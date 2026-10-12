@@ -55,7 +55,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     await iphone.getByText(/which one is real/i).waitFor({timeout:10000});
     await iphone.getByRole("button",{name:/Coffee/}).click();
     await third.getByRole("button",{name:/Tea/}).click();
-    await host.getByText(/the real answer/i).waitFor({timeout:10000});
+    await host.locator(".reveal-answer").waitFor({timeout:10000});
     await iphone.getByText(/Coffee/).first().waitFor();
     await Promise.all([ready(host),ready(iphone),ready(third)]);
 
@@ -63,14 +63,14 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     await Promise.all([submit(host,"Beach"),submit(iphone,"Mountains"),submit(third,"City")]);
     await host.getByRole("button",{name:/Mountains/}).click();
     await third.getByRole("button",{name:/Beach/}).click();
-    await iphone.getByText(/the real answer/i).waitFor({timeout:10000});
+    await iphone.locator(".reveal-answer").waitFor({timeout:10000});
     await Promise.all([ready(host),ready(iphone),ready(third)]);
 
     // Round 3: Sam spotlight.
     await Promise.all([submit(host,"Pizza"),submit(iphone,"Tacos"),submit(third,"Sushi")]);
     await host.getByRole("button",{name:/Sushi/}).click();
     await iphone.getByRole("button",{name:/Pizza/}).click();
-    await third.getByText(/the real answer/i).waitFor({timeout:10000});
+    await third.locator(".reveal-answer").waitFor({timeout:10000});
     await Promise.all([ready(host),ready(iphone),ready(third)]);
 
     await host.getByText(/GAME OVER/i).waitFor({timeout:10000});
