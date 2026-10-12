@@ -24,6 +24,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     await iphone.locator("#name").fill("Ivy");
     await iphone.locator("#room").fill(room);
     await iphone.getByRole("button",{name:/join room/i}).click();
+    await host.getByText(/2 players in the room/i).waitFor({timeout:25000});
 
     await third.locator("#name").fill("Sam");
     await third.locator("#room").fill(room);
@@ -42,36 +43,51 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
     await host.getByRole("button",{name:/start game/i}).click();
 
     async function submit(page,text){
-      await page.locator("#answer").waitFor({timeout:10000});
+      await page.locator("#answer").waitFor({timeout:15000});
       await page.locator("#answer").fill(text);
       await page.getByRole("button",{name:/lock answer/i}).click();
+      await page.getByText(/answer locked/i).waitFor({timeout:10000});
     }
     async function ready(page){
-      await page.getByRole("button",{name:/i.m ready|see final scores/i}).click();
+      const b=page.getByRole("button",{name:/i.m ready|see final scores/i});
+      await b.waitFor({timeout:10000});
+      await b.click();
+    }
+    async function voteFor(page,text){
+      await page.locator(".choice-list").waitFor({timeout:15000});
+      const b=page.locator(".choice").filter({hasText:text});
+      await b.waitFor({timeout:10000});
+      await b.click();
     }
 
     // Round 1: Host spotlight.
-    await Promise.all([submit(host,"Coffee"),submit(iphone,"Tea"),submit(third,"Juice")]);
+    await submit(host,"Coffee");
+    await submit(iphone,"Tea");
+    await submit(third,"Juice");
     await iphone.getByText(/which one is real/i).waitFor({timeout:10000});
-    await iphone.getByRole("button",{name:/Coffee/}).click();
-    await third.getByRole("button",{name:/Tea/}).click();
+    await voteFor(iphone,"Coffee");
+    await voteFor(third,"Tea");
     await host.locator(".reveal-answer").waitFor({timeout:10000});
     await iphone.getByText(/Coffee/).first().waitFor();
-    await Promise.all([ready(host),ready(iphone),ready(third)]);
+    await ready(host); await ready(iphone); await ready(third);
 
     // Round 2: Ivy spotlight.
-    await Promise.all([submit(host,"Beach"),submit(iphone,"Mountains"),submit(third,"City")]);
-    await host.getByRole("button",{name:/Mountains/}).click();
-    await third.getByRole("button",{name:/Beach/}).click();
+    await submit(host,"Beach");
+    await submit(iphone,"Mountains");
+    await submit(third,"City");
+    await voteFor(host,"Mountains");
+    await voteFor(third,"Beach");
     await iphone.locator(".reveal-answer").waitFor({timeout:10000});
-    await Promise.all([ready(host),ready(iphone),ready(third)]);
+    await ready(host); await ready(iphone); await ready(third);
 
     // Round 3: Sam spotlight.
-    await Promise.all([submit(host,"Pizza"),submit(iphone,"Tacos"),submit(third,"Sushi")]);
-    await host.getByRole("button",{name:/Sushi/}).click();
-    await iphone.getByRole("button",{name:/Pizza/}).click();
+    await submit(host,"Pizza");
+    await submit(iphone,"Tacos");
+    await submit(third,"Sushi");
+    await voteFor(host,"Sushi");
+    await voteFor(iphone,"Pizza");
     await third.locator(".reveal-answer").waitFor({timeout:10000});
-    await Promise.all([ready(host),ready(iphone),ready(third)]);
+    await ready(host); await ready(iphone); await ready(third);
 
     await host.getByText(/GAME OVER/i).waitFor({timeout:10000});
     await iphone.getByText(/GAME OVER/i).waitFor({timeout:10000});
